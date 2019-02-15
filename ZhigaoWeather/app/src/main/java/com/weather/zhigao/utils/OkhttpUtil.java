@@ -1,7 +1,10 @@
-package com.weather.zhigao;
+package com.weather.zhigao.utils;
 
 import android.app.Activity;
 import android.util.Log;
+
+import com.weather.zhigao.HttpLoggingInterceptor;
+import com.weather.zhigao.ResponseCallBack;
 
 import java.io.IOException;
 import java.util.Map;

@@ -1,5 +1,7 @@
 package com.weather.zhigao;
 
+import com.weather.zhigao.utils.LogUtil;
+
 import java.io.IOException;
 import java.nio.charset.Charset;
 

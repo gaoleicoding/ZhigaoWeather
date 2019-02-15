@@ -3,9 +3,11 @@
  * History:
  * Created by lipan on 2014-4-4
  */
-package com.weather.zhigao;
+package com.weather.zhigao.utils;
 
 import android.util.Log;
+
+import com.weather.zhigao.BuildConfig;
 
 
 /**

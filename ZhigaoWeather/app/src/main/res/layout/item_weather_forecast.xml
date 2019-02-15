@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp">
+
+
+    <TextView
+        android:id="@+id/tv_week"
+        style="@style/common_txt_12sp" />
+
+    <TextView
+        android:id="@+id/tv_date"
+        style="@style/common_txt_12sp" />
+
+    <ImageView
+        android:id="@+id/iv_weather"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"/>
+
+    <TextView
+        android:id="@+id/tv_weather"
+        style="@style/common_txt_12sp"
+        android:layout_marginLeft="2dp" />
+
+    <TextView
+        android:id="@+id/tv_temperature"
+        style="@style/common_txt_12sp" />
+
+    <TextView
+        android:id="@+id/tv_wind"
+        style="@style/common_txt_12sp" />
+</LinearLayout>
