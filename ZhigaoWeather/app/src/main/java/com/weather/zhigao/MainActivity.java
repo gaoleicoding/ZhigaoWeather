@@ -2,13 +2,17 @@ package com.weather.zhigao;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.Response;
+
 public class MainActivity extends AppCompatActivity {
     TextView textView;
+    String TAG="MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
         Map<String, String> params = new HashMap<>();
         params.put("location", "CN101010300");
-        params.put("key", "0dc8f1d3269642dda46421a87767cb84");
-        OkhttpUtil.getInstance().getDataAsync(Urls.url_weather_forecast, params, new ResponseCallBack() {
+        params.put("key", "227849effc2b4e83b4cf1b0caf743cf9");
+        OkhttpUtil.getInstance(this).getDataAsync(Urls.url_weather_forecast, params, new ResponseCallBack() {
             @Override
             public void onFailure(String error) {
                 textView.setText(error);
@@ -28,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(String response) {
-                textView.setText(response);
+                    textView.setText(response);
             }
         });
     }
