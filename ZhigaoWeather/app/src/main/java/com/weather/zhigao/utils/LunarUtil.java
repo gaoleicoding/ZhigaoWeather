@@ -185,7 +185,7 @@ public class LunarUtil {
     }
 
     public String toString() {
-        return (leap ? "闰" : "") + chineseNumber[month - 1] + "月"
+        return "农历"+(leap ? "闰" : "") + chineseNumber[month - 1] + "月"
                 + getChinaDayString(day);
     }
 

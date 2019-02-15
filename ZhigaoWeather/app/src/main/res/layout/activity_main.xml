@@ -42,6 +42,33 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="12dp"
                     android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_temperature"
+                    style="@style/common_txt_12sp"
+                    android:layout_below="@id/tv_date"
+                    android:layout_centerHorizontal="true"
+                    android:includeFontPadding="false"
+                    android:layout_marginTop="30dp"
+                    android:text="1"
+                    android:textSize="60sp" />
+
+                <TextView
+                    style="@style/common_txt_12sp"
+                    android:layout_below="@id/tv_date"
+                    android:layout_marginTop="30dp"
+                    android:layout_toRightOf="@id/tv_temperature"
+                    android:layout_marginLeft="0dp"
+                    android:text=" ℃"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/tv_weather"
+                    style="@style/common_txt_12sp"
+                    android:layout_alignBottom="@id/tv_temperature"
+                    android:layout_toRightOf="@id/tv_temperature"
+                    android:text="晴"
+                    android:textSize="14sp" />
             </RelativeLayout>
 
             <LinearLayout
