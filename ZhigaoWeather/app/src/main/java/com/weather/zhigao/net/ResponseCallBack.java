@@ -1,4 +1,4 @@
-package com.weather.zhigao;
+package com.weather.zhigao.net;
 
 import java.io.IOException;
 

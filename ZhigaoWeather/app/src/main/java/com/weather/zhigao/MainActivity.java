@@ -4,14 +4,20 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.jaeger.library.StatusBarUtil;
 import com.weather.zhigao.adapter.WeatherForecastAdapter;
 import com.weather.zhigao.adapter.divider.RecycleViewDivider;
 import com.weather.zhigao.model.WeatherBroadcast;
 import com.weather.zhigao.model.WeatherBroadcast.HeWeather6Bean.DailyForecastBean;
-import com.weather.zhigao.utils.OkhttpUtil;
+import com.weather.zhigao.net.ResponseCallBack;
+import com.weather.zhigao.net.OkhttpUtil;
+import com.weather.zhigao.net.Urls;
+import com.weather.zhigao.utils.LunarUtil;
+import com.weather.zhigao.utils.TimeUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,7 +28,8 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    TextView textView;
+    TextView tv_position,tv_date;
+    ImageView iv_menu;
     String TAG = "MainActivity";
     List<DailyForecastBean> broadcastList;
     RecyclerView broadcast_recyclerview;
@@ -33,9 +40,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        StatusBarUtil.setTransparent(this);
         broadcast_recyclerview=findViewById(R.id.broadcast_recyclerview);
-        textView = findViewById(R.id.textView);
+        iv_menu = findViewById(R.id.iv_menu);
+        tv_position = findViewById(R.id.tv_position);
+        tv_date = findViewById(R.id.tv_date);
+
         initRecyclerView();
         Map<String, String> params = new HashMap<>();
         params.put("location", "CN101010300");
@@ -43,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         OkhttpUtil.getInstance(this).getDataAsync(Urls.url_weather_forecast, params, new ResponseCallBack() {
             @Override
             public void onFailure(String error) {
-                textView.setText(error);
             }
 
             @Override
@@ -55,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
 //                            new TypeToken<List<WeatherBroadcast>>() {
 //                            }.getType());
                     forecastAdapter.setList(weatherBroadcast.getHeWeather6().get(0).getDaily_forecast());
+                    tv_position.setText(weatherBroadcast.getHeWeather6().get(0).getBasic().getLocation());
+                    String date=weatherBroadcast.getHeWeather6().get(0).getUpdate().getLoc().split(" ")[0];
+                    tv_date.setText(TimeUtil.getStringToDate(date)+" "+TimeUtil.dateToWeek(date)+" "+ LunarUtil.getLunarDate());
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
