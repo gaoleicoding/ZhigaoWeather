@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">智高天气</string>
-    <string name="weather_broadcast">天气预报</string>
+    <string name="weather_forecast">七天天气预报</string>
+    <string name="weather">天气</string>
+    <string name="forecast">预报</string>
+    <string name="wind">风力</string>
+    <string name="temperature">温度</string>
 
     <string name="loading">加载中...</string>
     <string name="load_failed">加载失败</string>
@@ -82,4 +86,7 @@
     <string name="tomorrow">明天&#160;&#160;&#8201;</string>
     <string name="yesterday">昨天</string>
     <string name="degree">级</string>
+    <string name="press_exit">再按一次退出程序</string>
+
+
 </resources>

@@ -17,64 +17,161 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/rl_home"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="15dp">
+                android:layout_height="match_parent">
 
 
                 <ImageView
                     android:id="@+id/iv_menu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="12dp"
                     android:src="@drawable/ic_menu_white" />
 
                 <TextView
                     android:id="@+id/tv_position"
-                    style="@style/common_txt_12sp"
+                    style="@style/common_txt"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginTop="12dp"
                     android:drawableLeft="@drawable/ic_edit_location_white"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/tv_date"
-                    style="@style/common_txt_12sp"
+                    style="@style/common_txt"
                     android:layout_below="@id/tv_position"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="12dp"
-                    android:textSize="14sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tv_temperature"
-                    style="@style/common_txt_12sp"
+                    style="@style/common_txt"
                     android:layout_below="@id/tv_date"
                     android:layout_centerHorizontal="true"
-                    android:includeFontPadding="false"
                     android:layout_marginTop="30dp"
-                    android:text="1"
-                    android:textSize="60sp" />
+                    android:includeFontPadding="false"
+                    android:textSize="81sp" />
 
                 <TextView
-                    style="@style/common_txt_12sp"
+                    style="@style/common_txt"
                     android:layout_below="@id/tv_date"
+                    android:layout_marginLeft="0dp"
                     android:layout_marginTop="30dp"
                     android:layout_toRightOf="@id/tv_temperature"
-                    android:layout_marginLeft="0dp"
                     android:text=" ℃"
-                    android:textSize="20sp" />
+                    android:textSize="22sp" />
 
                 <TextView
                     android:id="@+id/tv_weather"
-                    style="@style/common_txt_12sp"
+                    style="@style/common_txt"
                     android:layout_alignBottom="@id/tv_temperature"
                     android:layout_toRightOf="@id/tv_temperature"
-                    android:text="晴"
-                    android:textSize="14sp" />
+                    android:layout_marginLeft="15dp"
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:background="#33000000"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/weather"
+                            android:textColor="@color/white"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tv_lifestyle_weather"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:textColor="@color/color_88ffffff"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_height="match_parent"
+                        android:background="#eeffffff"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/temperature"
+                            android:textColor="@color/white"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tv_lifestyle_forecast"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:textColor="@color/color_88ffffff"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_height="match_parent"
+                        android:background="#eeffffff"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/wind"
+                            android:textColor="@color/white"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tv_lifestyle_wind"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:textColor="@color/color_88ffffff"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </LinearLayout>
             </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="15dp"
                 android:background="#33000000"
                 android:orientation="vertical">
 
@@ -82,21 +179,19 @@
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/weather_broadcast"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/weather_forecast"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="16sp" />
 
                 <View style="@style/horizontal_divider" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/broadcast_recyclerview"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
-                    />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

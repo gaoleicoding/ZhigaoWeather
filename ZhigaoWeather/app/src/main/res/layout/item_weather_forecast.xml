@@ -3,35 +3,36 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingBottom="10dp"
+    android:paddingTop="10dp"
     android:paddingRight="10dp"
-    android:paddingTop="10dp">
+    android:paddingBottom="10dp">
 
 
     <TextView
         android:id="@+id/tv_week"
-        style="@style/common_txt_12sp" />
+        style="@style/common_txt_14sp" />
 
     <TextView
         android:id="@+id/tv_date"
-        style="@style/common_txt_12sp" />
+        style="@style/common_txt_14sp" />
 
     <ImageView
         android:id="@+id/iv_weather"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"/>
+        android:layout_marginLeft="15dp" />
 
     <TextView
         android:id="@+id/tv_weather"
-        style="@style/common_txt_12sp"
-        android:layout_marginLeft="2dp" />
+        style="@style/common_txt_14sp"
+        android:layout_marginLeft="2dp"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tv_temperature"
-        style="@style/common_txt_12sp" />
+        style="@style/common_txt_14sp" />
 
     <TextView
         android:id="@+id/tv_wind"
-        style="@style/common_txt_12sp" />
+        style="@style/common_txt_14sp" />
 </LinearLayout>

@@ -9,10 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.weather.zhigao.R;
 import com.weather.zhigao.application.App;
-import com.weather.zhigao.model.WeatherBroadcast.HeWeather6Bean.DailyForecastBean;
+import com.weather.zhigao.model.WeatherForecastEntity.HeWeather6Bean.DailyForecastBean;
 import com.weather.zhigao.utils.TimeUtil;
 
 import java.util.List;

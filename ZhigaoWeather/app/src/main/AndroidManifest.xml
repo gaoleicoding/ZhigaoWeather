@@ -26,7 +26,12 @@
         android:supportsRtl="true"
         android:name=".application.App"
         android:theme="@style/AppTheme">
-        <activity android:name="com.weather.zhigao.MainActivity">
+        <activity android:name="com.weather.zhigao.MainActivity"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            />
+        <activity android:name="com.weather.zhigao.SplashActivity"
+            android:theme="@style/FullScreenStyle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
