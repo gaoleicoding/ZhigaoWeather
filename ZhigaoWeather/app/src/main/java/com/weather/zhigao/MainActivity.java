@@ -43,14 +43,15 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    TextView tv_position, tv_date, tv_temperature, tv_weather, tv_lifestyle_weather, tv_lifestyle_forecast, tv_lifestyle_wind;
+    TextView tv_position, tv_date, tv_temperature, tv_weather, tv_lifestyle_weather,
+            tv_lifestyle_forecast, tv_lifestyle_wind,tv_update_time;
     ImageView iv_menu, iv_expand_arrow;
     LinearLayout ll_bottom;
     String TAG = "MainActivity";
     List<DailyForecastBean> forecastList;
     List<HourlyBean> hourlyForecastList;
     List<LifestyleBean> lifeStyleList;
-    RecyclerView forecast_recyclerview, hourly_recyclerview,lifestyle_recyclerview;
+    RecyclerView forecast_recyclerview, hourly_recyclerview, lifestyle_recyclerview;
     WeatherForecastAdapter forecastAdapter;
     HourlyForecastAdapter hourlyForecastAdapter;
     LifeStyleAdapter lifeStyleAdapter;
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         tv_date = findViewById(R.id.tv_date);
         tv_temperature = findViewById(R.id.tv_temperature);
         tv_weather = findViewById(R.id.tv_weather);
+        tv_update_time = findViewById(R.id.tv_update_time);
         rl_home = findViewById(R.id.rl_home);
         rl_title = findViewById(R.id.rl_title);
         tv_lifestyle_weather = findViewById(R.id.tv_lifestyle_weather);
@@ -117,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
         OkhttpUtil.getInstance(this).getDataAsync(Urls.url_weather, params, new ResponseCallBack() {
             @Override
             public void onFailure(String error) {
+
             }
 
             @Override
@@ -141,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                     DailyForecastBean bean = weatherBroadcast.getHeWeather6().get(0).getDaily_forecast().get(0);
                     tv_lifestyle_forecast.setText(bean.tmp_min + "~" + bean.tmp_max + " ℃");
                     tv_lifestyle_wind.setText(bean.wind_dir + bean.wind_sc + App.mContext.getString(R.string.degree));
-                    App.romoveSplashActivity(MainActivity.this);
+                    tv_update_time.setText(getString(R.string.update_time)+weatherBroadcast.getHeWeather6().get(0).getUpdate().loc);
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -151,8 +154,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void initData() {
-
+    public void onResume() {
+        super.onResume();
+        App.romoveSplashActivity(MainActivity.this);
     }
 
     private void initRecyclerView() {
@@ -190,10 +194,11 @@ public class MainActivity extends AppCompatActivity {
     private void initLifeStyleRecyclerView() {
         lifeStyleList = new ArrayList<>();
         lifeStyleAdapter = new LifeStyleAdapter(this, lifeStyleList);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         lifestyle_recyclerview.setLayoutManager(gridLayoutManager);
         lifestyle_recyclerview.setAdapter(lifeStyleAdapter);
     }
+
     // 用来计算返回键的点击间隔时间
     private long exitTime = 0;
 

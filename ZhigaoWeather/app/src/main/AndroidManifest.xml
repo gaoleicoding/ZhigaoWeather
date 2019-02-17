@@ -19,18 +19,18 @@
     <!--<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
 
     <application
+        android:name=".application.App"
         android:allowBackup="true"
         android:icon="@mipmap/icon_app"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/icon_app_round"
         android:supportsRtl="true"
-        android:name=".application.App"
         android:theme="@style/AppTheme">
         <activity android:name="com.weather.zhigao.MainActivity"
-            android:excludeFromRecents="true"
-            android:noHistory="true"
+
             />
-        <activity android:name="com.weather.zhigao.SplashActivity"
+        <activity
+            android:name="com.weather.zhigao.SplashActivity"
             android:theme="@style/FullScreenStyle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
