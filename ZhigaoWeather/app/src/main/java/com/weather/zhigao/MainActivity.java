@@ -42,7 +42,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     TextView tv_position, tv_date, tv_temperature, tv_weather, tv_lifestyle_weather,
-            tv_lifestyle_forecast, tv_lifestyle_wind, tv_update_time;
+            tv_lifestyle_forecast, tv_lifestyle_wind, tv_update_time,tv_air_content;
     ImageView iv_menu, iv_expand_arrow;
     LinearLayout ll_root, ll_bottom;
     String TAG = "MainActivity";
@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         tv_lifestyle_wind = findViewById(R.id.tv_lifestyle_wind);
         scrollView = findViewById(R.id.scrollView);
         ll_bottom = findViewById(R.id.ll_bottom);
+        tv_air_content = findViewById(R.id.tv_air_content);
 
         iv_expand_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,7 +134,8 @@ public class MainActivity extends AppCompatActivity {
                     forecastAdapter.setList(weatherBroadcast.getHeWeather6().get(0).getDaily_forecast());
                     hourlyForecastAdapter.setList(weatherBroadcast.getHeWeather6().get(0).getHourly());
                     lifeStyleAdapter.setList(weatherBroadcast.getHeWeather6().get(0).getLifestyle());
-
+                    List<LifestyleBean> lifestyleList=weatherBroadcast.getHeWeather6().get(0).getLifestyle();
+                    tv_air_content.setText(lifestyleList.get(lifestyleList.size()-1).getBrf());
 
                     tv_position.setText(weatherBroadcast.getHeWeather6().get(0).getBasic().getLocation());
                     String date = weatherBroadcast.getHeWeather6().get(0).getUpdate().getLoc().split(" ")[0];
@@ -145,6 +147,8 @@ public class MainActivity extends AppCompatActivity {
                     tv_lifestyle_forecast.setText(bean.tmp_min + "~" + bean.tmp_max + " ℃");
                     tv_lifestyle_wind.setText(bean.wind_dir + bean.wind_sc + App.mContext.getString(R.string.degree));
                     tv_update_time.setText(getString(R.string.update_time) + weatherBroadcast.getHeWeather6().get(0).getUpdate().loc);
+
+
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

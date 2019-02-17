@@ -75,6 +75,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_toRightOf="@id/tv_temperature"
                     android:textSize="18sp" />
+
                 <TextView
                     android:id="@+id/tv_update_time"
                     style="@style/common_txt"
@@ -82,12 +83,41 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     android:textSize="14sp" />
+
                 <LinearLayout
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="60dp"
+                        android:background="@drawable/air_round_corner_bg"
+                        android:orientation="horizontal"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="5dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="5dp">
+
+                        <TextView
+                            android:id="@+id/tv_air_title"
+                            style="@style/common_txt"
+                            android:text="空气质量"
+                            android:textColor="#eeffffff"
+                            android:textSize="16sp" />
+
+
+                        <TextView
+                            android:id="@+id/tv_air_content"
+                            style="@style/common_txt"
+                            android:layout_marginLeft="10dp"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
 
                     <ImageView
                         android:id="@+id/iv_expand_arrow"
@@ -118,7 +148,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:text="@string/weather"
-                                android:textColor="@color/white"
+                                android:textColor="@color/white_trans"
                                 android:textSize="16sp" />
 
                             <TextView
@@ -126,7 +156,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
-                                android:textColor="@color/color_88ffffff"
+                                android:textColor="@color/white"
                                 android:textSize="15sp" />
                         </LinearLayout>
 
@@ -148,7 +178,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:text="@string/temperature"
-                                android:textColor="@color/white"
+                                android:textColor="@color/white_trans"
                                 android:textSize="16sp" />
 
                             <TextView
@@ -156,7 +186,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
-                                android:textColor="@color/color_88ffffff"
+                                android:textColor="@color/white"
                                 android:textSize="15sp" />
                         </LinearLayout>
 
@@ -178,7 +208,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:text="@string/wind"
-                                android:textColor="@color/white"
+                                android:textColor="@color/white_trans"
                                 android:textSize="16sp" />
 
                             <TextView
@@ -186,7 +216,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
-                                android:textColor="@color/color_88ffffff"
+                                android:textColor="@color/white"
                                 android:textSize="15sp" />
                         </LinearLayout>
                     </LinearLayout>
