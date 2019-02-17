@@ -68,8 +68,8 @@
                     android:id="@+id/tv_weather"
                     style="@style/common_txt"
                     android:layout_alignBottom="@id/tv_temperature"
-                    android:layout_toRightOf="@id/tv_temperature"
                     android:layout_marginLeft="15dp"
+                    android:layout_toRightOf="@id/tv_temperature"
                     android:textSize="18sp" />
 
                 <LinearLayout
@@ -101,15 +101,15 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:textColor="@color/color_88ffffff"
-                            android:textSize="14sp" />
+                            android:textSize="15sp" />
                     </LinearLayout>
 
                     <View
                         android:layout_width="0.5dp"
                         android:layout_height="match_parent"
-                        android:background="#eeffffff"
                         android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp" />
+                        android:layout_marginBottom="8dp"
+                        android:background="#eeffffff" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -131,15 +131,15 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:textColor="@color/color_88ffffff"
-                            android:textSize="14sp" />
+                            android:textSize="15sp" />
                     </LinearLayout>
 
                     <View
                         android:layout_width="0.5dp"
                         android:layout_height="match_parent"
-                        android:background="#eeffffff"
                         android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"/>
+                        android:layout_marginBottom="8dp"
+                        android:background="#eeffffff" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -161,10 +161,37 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:textColor="@color/color_88ffffff"
-                            android:textSize="14sp" />
+                            android:textSize="15sp" />
                     </LinearLayout>
                 </LinearLayout>
             </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="15dp"
+                android:background="#33000000"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/hourly_forecast"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <View style="@style/horizontal_divider" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/hourly_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -189,7 +216,7 @@
                 <View style="@style/horizontal_divider" />
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/broadcast_recyclerview"
+                    android:id="@+id/forecast_recyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>

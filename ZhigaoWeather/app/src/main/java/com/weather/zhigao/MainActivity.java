@@ -14,11 +14,13 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.jaeger.library.StatusBarUtil;
+import com.weather.zhigao.adapter.HourlyForecastAdapter;
 import com.weather.zhigao.adapter.WeatherForecastAdapter;
 import com.weather.zhigao.adapter.divider.RecycleViewDivider;
 import com.weather.zhigao.application.App;
 import com.weather.zhigao.model.WeatherForecastEntity;
 import com.weather.zhigao.model.WeatherForecastEntity.HeWeather6Bean.DailyForecastBean;
+import com.weather.zhigao.model.WeatherForecastEntity.HeWeather6Bean.HourlyBean;
 import com.weather.zhigao.net.OkhttpUtil;
 import com.weather.zhigao.net.ResponseCallBack;
 import com.weather.zhigao.net.Urls;
@@ -38,9 +40,11 @@ public class MainActivity extends AppCompatActivity {
     TextView tv_position, tv_date, tv_temperature, tv_weather, tv_lifestyle_weather, tv_lifestyle_forecast, tv_lifestyle_wind;
     ImageView iv_menu;
     String TAG = "MainActivity";
-    List<DailyForecastBean> broadcastList;
-    RecyclerView broadcast_recyclerview;
+    List<DailyForecastBean> forecastList;
+    List<HourlyBean>        hourlyForecastList;
+    RecyclerView forecast_recyclerview,hourly_recyclerview;
     WeatherForecastAdapter forecastAdapter;
+    HourlyForecastAdapter hourlyForecastAdapter;
     RelativeLayout rl_home;
 
     @Override
@@ -49,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         StatusBarUtil.setTransparent(this);
-        broadcast_recyclerview = findViewById(R.id.broadcast_recyclerview);
+        forecast_recyclerview = findViewById(R.id.forecast_recyclerview);
+        hourly_recyclerview = findViewById(R.id.hourly_recyclerview);
         iv_menu = findViewById(R.id.iv_menu);
         tv_position = findViewById(R.id.tv_position);
         tv_date = findViewById(R.id.tv_date);
@@ -65,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         layoutParams.height = ScreenUtils.getScreenHeight(this) - ScreenUtils.getStatusHeight(this);
         rl_home.setLayoutParams(layoutParams);
         initRecyclerView();
+        initHourlyRecyclerView();
         Map<String, String> params = new HashMap<>();
         params.put("location", "CN101010300");
         params.put("key", "227849effc2b4e83b4cf1b0caf743cf9");
@@ -78,10 +84,11 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     JSONObject object = new JSONObject(response);
                     WeatherForecastEntity weatherBroadcast = new Gson().fromJson(response, WeatherForecastEntity.class);
-//                    broadcastList = new Gson().fromJson(object.getString("HeWeather6"),
+//                    forecastList = new Gson().fromJson(object.getString("HeWeather6"),
 //                            new TypeToken<List<WeatherBroadcast>>() {
 //                            }.getType());
                     forecastAdapter.setList(weatherBroadcast.getHeWeather6().get(0).getDaily_forecast());
+                    hourlyForecastAdapter.setList(weatherBroadcast.getHeWeather6().get(0).getHourly());
                     tv_position.setText(weatherBroadcast.getHeWeather6().get(0).getBasic().getLocation());
                     String date = weatherBroadcast.getHeWeather6().get(0).getUpdate().getLoc().split(" ")[0];
                     tv_date.setText(TimeUtil.getStringToDate(date) + " " + TimeUtil.dateToWeek(date) + " " + LunarUtil.getLunarDate());
@@ -106,19 +113,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView() {
-        broadcastList = new ArrayList<>();
-        forecastAdapter = new WeatherForecastAdapter(this, broadcastList);
-        broadcast_recyclerview.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL));
+        forecastList = new ArrayList<>();
+        forecastAdapter = new WeatherForecastAdapter(this, forecastList);
+        forecast_recyclerview.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL));
 
-        broadcast_recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        forecast_recyclerview.setLayoutManager(new LinearLayoutManager(this));
 //        //解决数据加载不完的问题
-//        broadcast_recyclerview.setNestedScrollingEnabled(false);
-//        broadcast_recyclerview.setHasFixedSize(true);
+//        forecast_recyclerview.setNestedScrollingEnabled(false);
+//        forecast_recyclerview.setHasFixedSize(true);
 //        //解决数据加载完成后, 没有停留在顶部的问题
-//        broadcast_recyclerview.setFocusable(false);
-        broadcast_recyclerview.setAdapter(forecastAdapter);
+//        forecast_recyclerview.setFocusable(false);
+        forecast_recyclerview.setAdapter(forecastAdapter);
     }
-
+    private void initHourlyRecyclerView() {
+        hourlyForecastList = new ArrayList<>();
+        hourlyForecastAdapter = new HourlyForecastAdapter(this, hourlyForecastList);
+//        forecast_recyclerview.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.HORIZONTAL));
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+        hourly_recyclerview.setLayoutManager(linearLayoutManager);
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        hourly_recyclerview.setAdapter(hourlyForecastAdapter);
+    }
     // 用来计算返回键的点击间隔时间
     private long exitTime = 0;
 

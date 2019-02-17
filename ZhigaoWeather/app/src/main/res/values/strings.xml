@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">智高天气</string>
     <string name="weather_forecast">七天天气预报</string>
+    <string name="hourly_forecast">逐小时预报</string>
     <string name="weather">天气</string>
     <string name="forecast">预报</string>
     <string name="wind">风力</string>
