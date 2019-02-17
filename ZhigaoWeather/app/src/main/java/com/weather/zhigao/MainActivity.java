@@ -8,11 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,9 +42,9 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     TextView tv_position, tv_date, tv_temperature, tv_weather, tv_lifestyle_weather,
-            tv_lifestyle_forecast, tv_lifestyle_wind,tv_update_time;
+            tv_lifestyle_forecast, tv_lifestyle_wind, tv_update_time;
     ImageView iv_menu, iv_expand_arrow;
-    LinearLayout ll_bottom;
+    LinearLayout ll_root, ll_bottom;
     String TAG = "MainActivity";
     List<DailyForecastBean> forecastList;
     List<HourlyBean> hourlyForecastList;
@@ -65,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         StatusBarUtil.setTransparent(this);
+        ll_root = findViewById(R.id.ll_root);
         forecast_recyclerview = findViewById(R.id.forecast_recyclerview);
         hourly_recyclerview = findViewById(R.id.hourly_recyclerview);
         lifestyle_recyclerview = findViewById(R.id.lifestyle_recyclerview);
@@ -108,10 +107,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        initData();
         initRecyclerView();
         initHourlyRecyclerView();
         initLifeStyleRecyclerView();
+
 
         Map<String, String> params = new HashMap<>();
         params.put("location", "CN101010300");
@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                     DailyForecastBean bean = weatherBroadcast.getHeWeather6().get(0).getDaily_forecast().get(0);
                     tv_lifestyle_forecast.setText(bean.tmp_min + "~" + bean.tmp_max + " ℃");
                     tv_lifestyle_wind.setText(bean.wind_dir + bean.wind_sc + App.mContext.getString(R.string.degree));
-                    tv_update_time.setText(getString(R.string.update_time)+weatherBroadcast.getHeWeather6().get(0).getUpdate().loc);
+                    tv_update_time.setText(getString(R.string.update_time) + weatherBroadcast.getHeWeather6().get(0).getUpdate().loc);
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -152,6 +152,17 @@ public class MainActivity extends AppCompatActivity {
 //                    textView.setText(response);
             }
         });
+    }
+
+    private void initData() {
+        long sunriseTime = TimeUtil.dateToLong(TimeUtil.ConverToDate(TimeUtil.getCurrentDate() + " 06:00"));
+        long sunsetTime = TimeUtil.dateToLong(TimeUtil.ConverToDate(TimeUtil.getCurrentDate() + " 19:00"));
+        long currentTime = System.currentTimeMillis();
+        if (sunriseTime < currentTime && sunsetTime > currentTime) {
+            ll_root.setBackgroundResource(R.mipmap.background_sunny_day);
+        } else {
+            ll_root.setBackgroundResource(R.mipmap.background_sunny_night);
+        }
     }
 
     public void onResume() {

@@ -21,9 +21,20 @@ public class TimeUtil {
     }
 
     //把字符串转为日期
-    public static Date ConverToDate(String strDate) throws Exception {
-        @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        return df.parse(strDate);
+    public static Date ConverToDate(String strDate) {
+        DateFormat df;
+        try {
+            df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            return df.parse(strDate);
+        } catch (Exception e) {
+        }
+        return null;
+
+    }
+
+    //date类型的时间转为long
+    public static long dateToLong(Date date) {
+        return date.getTime();
     }
 
     public static String getStringToDate(String dateString) {
@@ -42,6 +53,12 @@ public class TimeUtil {
         return date;
     }
 
+    public static String getCurrentDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        Date now = new Date();
+        String time = sdf.format(now);
+        return time;
+    }
 
     public static String dateToWeek(String strDate) {
         int dayIndex = 0;
