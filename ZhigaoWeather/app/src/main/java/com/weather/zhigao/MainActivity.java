@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     FrameLayout frament_content;
     RelativeLayout rl_drawer;
     HomeFragment homeFragment;
+    ImageView iv_add;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +46,21 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout = findViewById(R.id.drawer_layout);
         frament_content = findViewById(R.id.frament_content);
         rl_drawer = findViewById(R.id.rl_drawer);
+        iv_add = findViewById(R.id.iv_add);
 
         StatusBarUtil.setColorForDrawerLayout(this, mDrawerLayout, 0);
         getSupportFragmentManager().beginTransaction().replace(R.id.frament_content, homeFragment).commit();
+        iv_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, FindCityActivity.class));
+            }
+        });
 
+    }
+
+    public void onResume() {
+        super.onResume();
     }
 
     // 用来计算返回键的点击间隔时间

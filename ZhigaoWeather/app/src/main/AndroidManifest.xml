@@ -26,9 +26,8 @@
         android:roundIcon="@mipmap/icon_app_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.weather.zhigao.MainActivity"
-
-            />
+        <activity android:name="com.weather.zhigao.MainActivity" />
+        <activity android:name="com.weather.zhigao.FindCityActivity" />
         <activity
             android:name="com.weather.zhigao.SplashActivity"
             android:theme="@style/FullScreenStyle">

@@ -74,7 +74,13 @@ public class ScreenUtils
             e.printStackTrace();  
         }  
         return statusHeight;  
-    }  
+    }
+    public static int getStatusHeight2(Context context){
+        // 获得状态栏高度
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        return context.getResources().getDimensionPixelSize(resourceId);
+    }
+
   
     /** 
      * 获取当前屏幕截图，包含状态栏 

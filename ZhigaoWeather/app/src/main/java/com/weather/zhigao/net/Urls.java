@@ -5,22 +5,10 @@ import android.database.Observable;
 import java.util.Map;
 
 public class Urls {
-    //    public interface WeatherInfoService {
-//        /*https://cdn.heweather.com/china-city-list.txt*/
-//        @Headers("Accept-Encoding: application/json")
-//        @GET()
-//        Observable<String> getCityInfos(@Url String url);
-//
-//        /*https://api.heweather.com/x3/condition?search=allcond&key=035591c2b70c45fa9b4dd2bcabce13fe*/
-//        @Headers("Accept-Encoding: application/json")
-//        @GET("x3/condition")
-//        Observable<ConditionsResponse> getConditionInfos(@QueryMap Map<String, String> params);
-//
-//        /*https://free-api.heweather.com/v5/weather?city=CN101010300&key=035591c2b70c45fa9b4dd2bcabce13fe*/
-//        @Headers("Accept-Encoding: application/json")
-//        @GET("v5/weather")
-//        Observable<CityWeatherResponse> getCityWeatherInfo(@QueryMap Map<String, String> params);
-//    }
+
+//    https://free-api.heweather.net/s6/weather?location=%E6%B5%B7%E6%B7%80&key=227849effc2b4e83b4cf1b0caf743cf9
+
+
     //常规天气数据集合：本接口包含了3-7天天气预报、实况天气、逐小时天气预报以及生活指数，有对应权限的用户可通过访问此接口一次性获取某一地区的上述所有天气数据
     public static final String url_weather = "https://free-api.heweather.net/s6/weather";
     // 3-10天天气预报：最长10天天气预报数据，天气预报包含的数据：日出日落、月升月落、最高最低温度、天气白天和夜间状况、风力、风速、风向、相对湿度、大气压强、降水量、降水概率、露点温度、紫外线强度、能见度等数据
@@ -36,4 +24,9 @@ public class Urls {
 
     //逐小时天气预报：具体包含的数据：温度、天气状况、风力、风速、风向、相对湿度、大气压强、降水概率等。
     public static final String url_weather_hourly = "https://free-api.heweather.net/s6/weather/hourly";
+
+    //热门城市列表：根据用户访问热度，我们可提供中国和海外热门城市列表，用于开发者可以为用户提供热门城市查询天气的功能
+    public static final String url_hot_city = "https://search.heweather.net/top";
+    //城市搜索：支持模糊搜索的全球城市搜索服务
+    public static final String url_find_city = "https://search.heweather.net/find";
 }

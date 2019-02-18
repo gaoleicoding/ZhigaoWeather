@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.CycleInterpolator;
@@ -16,11 +17,14 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.jaeger.library.StatusBarUtil;
 import com.weather.zhigao.application.App;
+import com.weather.zhigao.model.HotCityEntity;
 import com.weather.zhigao.model.WeatherForecastEntity;
 import com.weather.zhigao.net.OkhttpUtil;
 import com.weather.zhigao.net.ResponseCallBack;
 import com.weather.zhigao.net.Urls;
+import com.weather.zhigao.utils.LogUtil;
 import com.weather.zhigao.utils.LunarUtil;
+import com.weather.zhigao.utils.SPUtils;
 import com.weather.zhigao.utils.TimeUtil;
 
 import org.json.JSONException;
@@ -33,6 +37,8 @@ public class SplashActivity extends AppCompatActivity {
 
     ImageView ivSplashIcon;
     WeatherForecastEntity weatherBroadcast;
+    String TAG = "SplashActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,11 +56,45 @@ public class SplashActivity extends AppCompatActivity {
 
         setAndroidNativeLightStatusBar(this, true);
         App.addAppActivity(this);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
 
+
+        getHotCityAdvance();
+
+    }
+
+    //提前获取热搜城市信息，这样进入添加城市界面直接获取传递过来的数据，而不用从网络上获取，显示速度快，用户体验好
+    private void getHotCityAdvance() {
+        Map<String, String> map = new HashMap<>();
+        map.put("group", "cn");
+        map.put("number", "50");
+        OkhttpUtil.getInstance(this).getDataAsync(Urls.url_hot_city, map, new ResponseCallBack() {
+            @Override
+            public void onFailure(String error) {
+
+            }
+
+            @Override
+            public void onResponse(String response) {
+//                HotCityEntity hotCityEntity = new Gson().fromJson(response, HotCityEntity.class);
+                SPUtils.setParam(SplashActivity.this, "hotcity", response);
+                String currentCity = (String) SPUtils.getParam(SplashActivity.this, "currentCity", "");
+                LogUtil.d(TAG, "currentCity：" + currentCity);
+                if ("".equals(currentCity)) {
+                    startActivity(new Intent(SplashActivity.this, FindCityActivity.class));
+                    finish();
+                } else {
+                    getWeatherInfoAdvance(currentCity);
+                }
+
+            }
+        });
+    }
+
+    //提前获取城市天气信息，这样进入主界面直接获取传递过来的数据，而不用从网络上获取，显示速度快，用户体验好
+    private void getWeatherInfoAdvance(String location) {
         Map<String, String> params = new HashMap<>();
-        params.put("location", "CN101010300");
-        params.put("key", "227849effc2b4e83b4cf1b0caf743cf9");
+        params.put("location", location);
+
         OkhttpUtil.getInstance(this).getDataAsync(Urls.url_weather, params, new ResponseCallBack() {
             @Override
             public void onFailure(String error) {
@@ -69,18 +109,17 @@ public class SplashActivity extends AppCompatActivity {
                     @Override
                     public void run() {
 
-                        Intent intent=new Intent(SplashActivity.this, MainActivity.class);
-                        intent.putExtra("weather",weatherBroadcast);
+                        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                        intent.putExtra("weather", weatherBroadcast);
                         startActivity(intent);
+                        finish();
 
                     }
-                }, 2000);
+                }, 1500);
 
 
             }
         });
-
-
     }
 
     private static void setAndroidNativeLightStatusBar(Activity activity, boolean dark) {
@@ -93,26 +132,6 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
-    // 用来计算返回键的点击间隔时间
-    private long exitTime = 0;
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK
-                && event.getAction() == KeyEvent.ACTION_DOWN) {
-
-            if ((System.currentTimeMillis() - exitTime) > 2000) {
-                //弹出提示，可以有多种方式
-                Toast.makeText(getApplicationContext(), getString(R.string.press_exit), Toast.LENGTH_SHORT).show();
-                exitTime = System.currentTimeMillis();
-            } else {
-                finish();
-            }
-            return true;
-        }
-
-        return super.onKeyDown(keyCode, event);
-    }
 
     private void startAnimation() {
         ObjectAnimator animator = ObjectAnimator.ofFloat(ivSplashIcon, "translationY", 0, -(ivSplashIcon.getHeight() >> 1));

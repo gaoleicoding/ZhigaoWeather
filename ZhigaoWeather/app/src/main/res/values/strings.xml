@@ -9,6 +9,9 @@
     <string name="temperature">温度</string>
     <string name="update_time">天气更新时间：</string>
     <string name="edit">编辑</string>
+    <string name="add_city">选择城市</string>
+    <string name="input_city">请输入城市名称或拼音</string>
+    <string name="hot_city">热搜城市</string>
 
     <string name="loading">加载中...</string>
     <string name="load_failed">加载失败</string>

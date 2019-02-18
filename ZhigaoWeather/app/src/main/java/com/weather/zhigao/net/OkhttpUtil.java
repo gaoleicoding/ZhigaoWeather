@@ -79,6 +79,7 @@ public class OkhttpUtil {
      * get请求，只有键值对参数
      */
     private String setUrl(String mUrl, Map<String, String> mParamsMap) {
+        mParamsMap.put("key", "227849effc2b4e83b4cf1b0caf743cf9");
         if (mParamsMap != null) {
             mUrl = mUrl + "?";
             for (String key : mParamsMap.keySet()) {

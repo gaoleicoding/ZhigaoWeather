@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
+import com.weather.zhigao.FindCityActivity;
 import com.weather.zhigao.SplashActivity;
 
 import java.util.ArrayList;
@@ -34,10 +35,13 @@ public class App extends Application {
     /**
      * 移除SplashActivity
      */
-    public static void romoveSplashActivity(Context context) {
+    public static void romoveUselessActivity(Context context) {
 
         for (Activity ac : activityList) {
             if (ac instanceof SplashActivity) {
+                ac.finish();
+            }
+            if (ac instanceof FindCityActivity) {
                 ac.finish();
             }
         }

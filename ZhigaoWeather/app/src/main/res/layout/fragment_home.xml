@@ -16,14 +16,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="10dp"
             android:src="@mipmap/ic_menu_white" />
 
         <TextView
             android:id="@+id/tv_position"
             style="@style/common_txt"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="10dp"
             android:drawableLeft="@mipmap/ic_edit_location_white"
             android:textSize="18sp" />
 
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="10dp"
             android:src="@mipmap/icon_setting_white" />
 
         <TextView

@@ -60,6 +60,7 @@ public class HomeFragment extends Fragment {
     NestedScrollView scrollView;
     int homeHeight, bottomHeight;
     WeatherForecastEntity weatherBroadcast;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -126,7 +127,6 @@ public class HomeFragment extends Fragment {
         initData(weatherBroadcast);
 
 
-
 //        Map<String, String> params = new HashMap<>();
 //        params.put("location", "CN101010300");
 //        params.put("key", "227849effc2b4e83b4cf1b0caf743cf9");
@@ -173,9 +173,10 @@ public class HomeFragment extends Fragment {
         return mParentView;
     }
 
-    public void setData(WeatherForecastEntity weatherBroadcast){
-        this.weatherBroadcast=weatherBroadcast;
+    public void setData(WeatherForecastEntity weatherBroadcast) {
+        this.weatherBroadcast = weatherBroadcast;
     }
+
     public void initData(WeatherForecastEntity weatherBroadcast) {
         initRecyclerView();
         initHourlyRecyclerView();
@@ -209,10 +210,6 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    public void onResume() {
-        super.onResume();
-        App.romoveSplashActivity(getActivity());
-    }
 
     private void initRecyclerView() {
         forecastList = new ArrayList<>();
