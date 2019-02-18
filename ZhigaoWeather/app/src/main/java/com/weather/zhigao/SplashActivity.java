@@ -7,46 +7,32 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.animation.BounceInterpolator;
 import android.view.animation.CycleInterpolator;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.jaeger.library.StatusBarUtil;
-import com.weather.zhigao.adapter.WeatherForecastAdapter;
-import com.weather.zhigao.adapter.divider.RecycleViewDivider;
 import com.weather.zhigao.application.App;
 import com.weather.zhigao.model.WeatherForecastEntity;
-import com.weather.zhigao.model.WeatherForecastEntity.HeWeather6Bean.DailyForecastBean;
 import com.weather.zhigao.net.OkhttpUtil;
 import com.weather.zhigao.net.ResponseCallBack;
 import com.weather.zhigao.net.Urls;
 import com.weather.zhigao.utils.LunarUtil;
-import com.weather.zhigao.utils.ScreenUtils;
 import com.weather.zhigao.utils.TimeUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class SplashActivity extends AppCompatActivity {
 
     ImageView ivSplashIcon;
-
+    WeatherForecastEntity weatherBroadcast;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,15 +50,36 @@ public class SplashActivity extends AppCompatActivity {
 
         setAndroidNativeLightStatusBar(this, true);
         App.addAppActivity(this);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
+        Map<String, String> params = new HashMap<>();
+        params.put("location", "CN101010300");
+        params.put("key", "227849effc2b4e83b4cf1b0caf743cf9");
+        OkhttpUtil.getInstance(this).getDataAsync(Urls.url_weather, params, new ResponseCallBack() {
+            @Override
+            public void onFailure(String error) {
 
-                }
-            }, 3000);
+            }
+
+            @Override
+            public void onResponse(String response) {
+                weatherBroadcast = new Gson().fromJson(response, WeatherForecastEntity.class);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        Intent intent=new Intent(SplashActivity.this, MainActivity.class);
+                        intent.putExtra("weather",weatherBroadcast);
+                        startActivity(intent);
+
+                    }
+                }, 2000);
+
+
+            }
+        });
+
 
     }
 

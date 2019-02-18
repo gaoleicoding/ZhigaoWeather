@@ -1,8 +1,11 @@
 package com.weather.zhigao.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
-public class WeatherForecastEntity {
+public class WeatherForecastEntity implements Parcelable{
 
 
     public List<HeWeather6Bean> HeWeather6;
@@ -15,7 +18,7 @@ public class WeatherForecastEntity {
         this.HeWeather6 = HeWeather6;
     }
 
-    public static class HeWeather6Bean {
+    public static class HeWeather6Bean implements Parcelable{
         /**
          * basic : {"cid":"CN101010300","location":"朝阳","parent_city":"北京","admin_area":"北京","cnty":"中国","lat":"39.92148972","lon":"116.48641205","tz":"+8.00"}
          * update : {"loc":"2019-02-16 20:56","utc":"2019-02-16 12:56"}
@@ -90,7 +93,7 @@ public class WeatherForecastEntity {
             this.lifestyle = lifestyle;
         }
 
-        public static class BasicBean {
+        public static class BasicBean implements Parcelable{
             /**
              * cid : CN101010300
              * location : 朝阳
@@ -174,9 +177,52 @@ public class WeatherForecastEntity {
             public void setTz(String tz) {
                 this.tz = tz;
             }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(this.cid);
+                dest.writeString(this.location);
+                dest.writeString(this.parent_city);
+                dest.writeString(this.admin_area);
+                dest.writeString(this.cnty);
+                dest.writeString(this.lat);
+                dest.writeString(this.lon);
+                dest.writeString(this.tz);
+            }
+
+            public BasicBean() {
+            }
+
+            protected BasicBean(Parcel in) {
+                this.cid = in.readString();
+                this.location = in.readString();
+                this.parent_city = in.readString();
+                this.admin_area = in.readString();
+                this.cnty = in.readString();
+                this.lat = in.readString();
+                this.lon = in.readString();
+                this.tz = in.readString();
+            }
+
+            public static final Creator<BasicBean> CREATOR = new Creator<BasicBean>() {
+                @Override
+                public BasicBean createFromParcel(Parcel source) {
+                    return new BasicBean(source);
+                }
+
+                @Override
+                public BasicBean[] newArray(int size) {
+                    return new BasicBean[size];
+                }
+            };
         }
 
-        public static class UpdateBean {
+        public static class UpdateBean implements Parcelable{
             /**
              * loc : 2019-02-16 20:56
              * utc : 2019-02-16 12:56
@@ -200,9 +246,40 @@ public class WeatherForecastEntity {
             public void setUtc(String utc) {
                 this.utc = utc;
             }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(this.loc);
+                dest.writeString(this.utc);
+            }
+
+            public UpdateBean() {
+            }
+
+            protected UpdateBean(Parcel in) {
+                this.loc = in.readString();
+                this.utc = in.readString();
+            }
+
+            public static final Creator<UpdateBean> CREATOR = new Creator<UpdateBean>() {
+                @Override
+                public UpdateBean createFromParcel(Parcel source) {
+                    return new UpdateBean(source);
+                }
+
+                @Override
+                public UpdateBean[] newArray(int size) {
+                    return new UpdateBean[size];
+                }
+            };
         }
 
-        public static class NowBean {
+        public static class NowBean implements Parcelable{
             /**
              * cloud : 0
              * cond_code : 100
@@ -336,9 +413,62 @@ public class WeatherForecastEntity {
             public void setWind_spd(String wind_spd) {
                 this.wind_spd = wind_spd;
             }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(this.cloud);
+                dest.writeString(this.cond_code);
+                dest.writeString(this.cond_txt);
+                dest.writeString(this.fl);
+                dest.writeString(this.hum);
+                dest.writeString(this.pcpn);
+                dest.writeString(this.pres);
+                dest.writeString(this.tmp);
+                dest.writeString(this.vis);
+                dest.writeString(this.wind_deg);
+                dest.writeString(this.wind_dir);
+                dest.writeString(this.wind_sc);
+                dest.writeString(this.wind_spd);
+            }
+
+            public NowBean() {
+            }
+
+            protected NowBean(Parcel in) {
+                this.cloud = in.readString();
+                this.cond_code = in.readString();
+                this.cond_txt = in.readString();
+                this.fl = in.readString();
+                this.hum = in.readString();
+                this.pcpn = in.readString();
+                this.pres = in.readString();
+                this.tmp = in.readString();
+                this.vis = in.readString();
+                this.wind_deg = in.readString();
+                this.wind_dir = in.readString();
+                this.wind_sc = in.readString();
+                this.wind_spd = in.readString();
+            }
+
+            public static final Creator<NowBean> CREATOR = new Creator<NowBean>() {
+                @Override
+                public NowBean createFromParcel(Parcel source) {
+                    return new NowBean(source);
+                }
+
+                @Override
+                public NowBean[] newArray(int size) {
+                    return new NowBean[size];
+                }
+            };
         }
 
-        public static class DailyForecastBean {
+        public static class DailyForecastBean implements Parcelable{
             /**
              * cond_code_d : 100
              * cond_code_n : 100
@@ -552,9 +682,78 @@ public class WeatherForecastEntity {
             public void setWind_spd(String wind_spd) {
                 this.wind_spd = wind_spd;
             }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(this.cond_code_d);
+                dest.writeString(this.cond_code_n);
+                dest.writeString(this.cond_txt_d);
+                dest.writeString(this.cond_txt_n);
+                dest.writeString(this.date);
+                dest.writeString(this.hum);
+                dest.writeString(this.mr);
+                dest.writeString(this.ms);
+                dest.writeString(this.pcpn);
+                dest.writeString(this.pop);
+                dest.writeString(this.pres);
+                dest.writeString(this.sr);
+                dest.writeString(this.ss);
+                dest.writeString(this.tmp_max);
+                dest.writeString(this.tmp_min);
+                dest.writeString(this.uv_index);
+                dest.writeString(this.vis);
+                dest.writeString(this.wind_deg);
+                dest.writeString(this.wind_dir);
+                dest.writeString(this.wind_sc);
+                dest.writeString(this.wind_spd);
+            }
+
+            public DailyForecastBean() {
+            }
+
+            protected DailyForecastBean(Parcel in) {
+                this.cond_code_d = in.readString();
+                this.cond_code_n = in.readString();
+                this.cond_txt_d = in.readString();
+                this.cond_txt_n = in.readString();
+                this.date = in.readString();
+                this.hum = in.readString();
+                this.mr = in.readString();
+                this.ms = in.readString();
+                this.pcpn = in.readString();
+                this.pop = in.readString();
+                this.pres = in.readString();
+                this.sr = in.readString();
+                this.ss = in.readString();
+                this.tmp_max = in.readString();
+                this.tmp_min = in.readString();
+                this.uv_index = in.readString();
+                this.vis = in.readString();
+                this.wind_deg = in.readString();
+                this.wind_dir = in.readString();
+                this.wind_sc = in.readString();
+                this.wind_spd = in.readString();
+            }
+
+            public static final Creator<DailyForecastBean> CREATOR = new Creator<DailyForecastBean>() {
+                @Override
+                public DailyForecastBean createFromParcel(Parcel source) {
+                    return new DailyForecastBean(source);
+                }
+
+                @Override
+                public DailyForecastBean[] newArray(int size) {
+                    return new DailyForecastBean[size];
+                }
+            };
         }
 
-        public static class HourlyBean {
+        public static class HourlyBean implements Parcelable{
             /**
              * cloud : 2
              * cond_code : 100
@@ -688,9 +887,62 @@ public class WeatherForecastEntity {
             public void setWind_spd(String wind_spd) {
                 this.wind_spd = wind_spd;
             }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(this.cloud);
+                dest.writeString(this.cond_code);
+                dest.writeString(this.cond_txt);
+                dest.writeString(this.dew);
+                dest.writeString(this.hum);
+                dest.writeString(this.pop);
+                dest.writeString(this.pres);
+                dest.writeString(this.time);
+                dest.writeString(this.tmp);
+                dest.writeString(this.wind_deg);
+                dest.writeString(this.wind_dir);
+                dest.writeString(this.wind_sc);
+                dest.writeString(this.wind_spd);
+            }
+
+            public HourlyBean() {
+            }
+
+            protected HourlyBean(Parcel in) {
+                this.cloud = in.readString();
+                this.cond_code = in.readString();
+                this.cond_txt = in.readString();
+                this.dew = in.readString();
+                this.hum = in.readString();
+                this.pop = in.readString();
+                this.pres = in.readString();
+                this.time = in.readString();
+                this.tmp = in.readString();
+                this.wind_deg = in.readString();
+                this.wind_dir = in.readString();
+                this.wind_sc = in.readString();
+                this.wind_spd = in.readString();
+            }
+
+            public static final Creator<HourlyBean> CREATOR = new Creator<HourlyBean>() {
+                @Override
+                public HourlyBean createFromParcel(Parcel source) {
+                    return new HourlyBean(source);
+                }
+
+                @Override
+                public HourlyBean[] newArray(int size) {
+                    return new HourlyBean[size];
+                }
+            };
         }
 
-        public static class LifestyleBean {
+        public static class LifestyleBean implements Parcelable{
             /**
              * type : comf
              * brf : 较不舒适
@@ -724,6 +976,109 @@ public class WeatherForecastEntity {
             public void setTxt(String txt) {
                 this.txt = txt;
             }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(this.type);
+                dest.writeString(this.brf);
+                dest.writeString(this.txt);
+            }
+
+            public LifestyleBean() {
+            }
+
+            protected LifestyleBean(Parcel in) {
+                this.type = in.readString();
+                this.brf = in.readString();
+                this.txt = in.readString();
+            }
+
+            public static final Creator<LifestyleBean> CREATOR = new Creator<LifestyleBean>() {
+                @Override
+                public LifestyleBean createFromParcel(Parcel source) {
+                    return new LifestyleBean(source);
+                }
+
+                @Override
+                public LifestyleBean[] newArray(int size) {
+                    return new LifestyleBean[size];
+                }
+            };
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeParcelable(this.basic, flags);
+            dest.writeParcelable(this.update, flags);
+            dest.writeString(this.status);
+            dest.writeParcelable(this.now, flags);
+            dest.writeTypedList(this.daily_forecast);
+            dest.writeTypedList(this.hourly);
+            dest.writeTypedList(this.lifestyle);
+        }
+
+        public HeWeather6Bean() {
+        }
+
+        protected HeWeather6Bean(Parcel in) {
+            this.basic = in.readParcelable(BasicBean.class.getClassLoader());
+            this.update = in.readParcelable(UpdateBean.class.getClassLoader());
+            this.status = in.readString();
+            this.now = in.readParcelable(NowBean.class.getClassLoader());
+            this.daily_forecast = in.createTypedArrayList(DailyForecastBean.CREATOR);
+            this.hourly = in.createTypedArrayList(HourlyBean.CREATOR);
+            this.lifestyle = in.createTypedArrayList(LifestyleBean.CREATOR);
+        }
+
+        public static final Creator<HeWeather6Bean> CREATOR = new Creator<HeWeather6Bean>() {
+            @Override
+            public HeWeather6Bean createFromParcel(Parcel source) {
+                return new HeWeather6Bean(source);
+            }
+
+            @Override
+            public HeWeather6Bean[] newArray(int size) {
+                return new HeWeather6Bean[size];
+            }
+        };
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedList(this.HeWeather6);
+    }
+
+    public WeatherForecastEntity() {
+    }
+
+    protected WeatherForecastEntity(Parcel in) {
+        this.HeWeather6 = in.createTypedArrayList(HeWeather6Bean.CREATOR);
+    }
+
+    public static final Creator<WeatherForecastEntity> CREATOR = new Creator<WeatherForecastEntity>() {
+        @Override
+        public WeatherForecastEntity createFromParcel(Parcel source) {
+            return new WeatherForecastEntity(source);
+        }
+
+        @Override
+        public WeatherForecastEntity[] newArray(int size) {
+            return new WeatherForecastEntity[size];
+        }
+    };
 }
