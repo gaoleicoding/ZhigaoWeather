@@ -12,6 +12,7 @@
     <string name="add_city">选择城市</string>
     <string name="input_city">请输入城市名称或拼音</string>
     <string name="hot_city">热搜城市</string>
+    <string name="cancel">取消</string>
 
     <string name="loading">加载中...</string>
     <string name="load_failed">加载失败</string>

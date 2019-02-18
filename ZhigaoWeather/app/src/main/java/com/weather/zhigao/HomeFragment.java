@@ -188,7 +188,8 @@ public class HomeFragment extends Fragment {
         List<LifestyleBean> lifestyleList = weatherBroadcast.getHeWeather6().get(0).getLifestyle();
         tv_air_content.setText(lifestyleList.get(lifestyleList.size() - 1).getBrf());
 
-        tv_position.setText(weatherBroadcast.getHeWeather6().get(0).getBasic().getLocation());
+        String location=weatherBroadcast.getHeWeather6().get(0).getBasic().getLocation();
+        tv_position.setText(location);
         String date = weatherBroadcast.getHeWeather6().get(0).getUpdate().getLoc().split(" ")[0];
         tv_date.setText(TimeUtil.getStringToDate(date) + " " + TimeUtil.dateToWeek(date) + " " + LunarUtil.getLunarDate());
         tv_temperature.setText(weatherBroadcast.getHeWeather6().get(0).getNow().tmp);
@@ -215,7 +216,6 @@ public class HomeFragment extends Fragment {
         forecastList = new ArrayList<>();
         forecastAdapter = new WeatherForecastAdapter(getActivity(), forecastList);
         forecast_recyclerview.addItemDecoration(new RecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL));
-
         forecast_recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 //        //解决数据加载不完的问题

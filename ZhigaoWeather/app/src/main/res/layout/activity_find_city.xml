@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ll_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,21 +23,25 @@
             style="@style/common_txt"
             android:layout_centerHorizontal="true"
             android:text="@string/add_city"
-            android:textSize="16sp" />
+            android:textSize="17sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_below="@id/iv_back"
             android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
             android:layout_marginRight="30dp"
 
-            android:background="@drawable/city_round_corner_bg"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:orientation="horizontal"
-            android:paddingTop="10dp">
-
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:background="@drawable/city_round_corner_bg">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -46,26 +50,44 @@
                 android:src="@mipmap/icon_search" />
 
             <EditText
+                android:id="@+id/et_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:background="@null"
                 android:hint="@string/input_city"
-                android:paddingBottom="7dp"
-                android:paddingLeft="5dp"
+                android:imeOptions="actionSearch"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:paddingLeft="8dp"
+                android:paddingTop="8dp"
                 android:paddingRight="10dp"
-                android:paddingTop="7dp"
+                android:paddingBottom="8dp"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
+                android:textSize="16sp" />
+
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_cancel"
+                style="@style/common_txt"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:text="@string/cancel"
+                android:textColor="@color/black"
+                android:visibility="gone"
                 android:textSize="15sp" />
         </LinearLayout>
+
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/tv_hot"
         style="@style/common_txt"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
+        android:layout_below="@id/rl_title"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:text="@string/hot_city"
         android:textColor="#b7b7b7"
         android:textSize="14sp" />
@@ -74,6 +96,13 @@
         android:id="@+id/city_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rl_title" />
+        android:layout_below="@id/tv_hot" />
 
-</LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/search_city_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="gone"
+        android:layout_below="@id/rl_title" />
+</RelativeLayout>

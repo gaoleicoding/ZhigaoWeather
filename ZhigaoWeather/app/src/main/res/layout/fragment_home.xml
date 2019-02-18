@@ -34,6 +34,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
+            android:visibility="gone"
             android:src="@mipmap/icon_setting_white" />
 
         <TextView

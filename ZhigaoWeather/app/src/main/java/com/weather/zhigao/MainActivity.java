@@ -59,8 +59,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void onResume() {
-        super.onResume();
+    protected void onNewIntent(Intent intent) {
+
+        super.onNewIntent(intent);
+        WeatherForecastEntity weatherBroadcast = intent.getParcelableExtra("weather");
+        homeFragment.initData(weatherBroadcast);
+
     }
 
     // 用来计算返回键的点击间隔时间
