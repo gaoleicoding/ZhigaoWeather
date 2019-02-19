@@ -22,9 +22,11 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.jaeger.library.StatusBarUtil;
 import com.weather.zhigao.adapter.HotCityAdapter;
-import com.weather.zhigao.adapter.LifeStyleAdapter;
+import com.weather.zhigao.db.DataBaseDao;
+import com.weather.zhigao.model.WeatherForecastEntity.HeWeather6Bean.DailyForecastBean;
 import com.weather.zhigao.adapter.SearchCityAdapter;
 import com.weather.zhigao.adapter.divider.RecycleViewDivider;
+import com.weather.zhigao.model.CityAddBean;
 import com.weather.zhigao.model.HotCityEntity;
 import com.weather.zhigao.model.SearchCityEntity;
 import com.weather.zhigao.model.WeatherForecastEntity;
@@ -32,6 +34,7 @@ import com.weather.zhigao.net.OkhttpUtil;
 import com.weather.zhigao.net.ResponseCallBack;
 import com.weather.zhigao.net.Urls;
 import com.weather.zhigao.utils.KeyboardUtils;
+import com.weather.zhigao.utils.LogUtil;
 import com.weather.zhigao.utils.SPUtils;
 import com.weather.zhigao.utils.ScreenUtils;
 
@@ -72,6 +75,7 @@ public class FindCityActivity extends AppCompatActivity {
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) rl_title.getLayoutParams();
         rl_title.setPadding(0, statusBarHeight, 0, 0);
         rl_title.setLayoutParams(layoutParams);
+
         String response = (String) SPUtils.getParam(this, "hotcity", "");
 
         initHotCityRecyclerView();
@@ -183,6 +187,7 @@ tv_cancel.setOnClickListener(new View.OnClickListener() {
                 Intent intent = new Intent(FindCityActivity.this, MainActivity.class);
                 intent.putExtra("weather", weatherBroadcast);
                 startActivity(intent);
+                inserData(weatherBroadcast);
                 finish();
 
             }
@@ -190,6 +195,20 @@ tv_cancel.setOnClickListener(new View.OnClickListener() {
         hasChoosenCity = true;
     }
 
+    private void inserData(WeatherForecastEntity weatherBroadcast) {
+        String location = weatherBroadcast.getHeWeather6().get(0).getBasic().getLocation();
+
+        String cond_txt = weatherBroadcast.getHeWeather6().get(0).getNow().cond_txt;
+        DailyForecastBean bean = weatherBroadcast.getHeWeather6().get(0).getDaily_forecast().get(0);
+        String tmp_min = bean.tmp_min;
+        String tmp_max = bean.tmp_max;
+        CityAddBean cityAddBean = new CityAddBean(location, cond_txt, tmp_min, tmp_max);
+        DataBaseDao dataBaseDao = new DataBaseDao(this);
+        if (dataBaseDao != null)
+            dataBaseDao.insert(cityAddBean);
+
+
+    }
     //提前获取城市天气信息，这样进入主界面直接获取传递过来的数据，而不用从网络上获取，显示速度快，用户体验好
     private void beginSearch(String location) {
         KeyboardUtils.hideKeyboard(et_search);
@@ -205,7 +224,7 @@ tv_cancel.setOnClickListener(new View.OnClickListener() {
             public void onResponse(String response) {
                 final SearchCityEntity searchCityEntity = new Gson().fromJson(response, SearchCityEntity.class);
                 searchCityList = searchCityEntity.getHeWeather6().get(0).getBasic();
-                if (searchCityList.size() == 0) {
+                if (searchCityList==null||searchCityList.size() == 0) {
                     Toast.makeText(FindCityActivity.this, "城市不存在，请重新输入", Toast.LENGTH_SHORT).show();
                     return;
                 }
