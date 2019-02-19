@@ -136,7 +136,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:padding="5dp"
-                        android:src="@mipmap/up_arrow2" />
+                        android:src="@mipmap/up_arrow" />
 
                     <LinearLayout
                         android:id="@+id/ll_bottom"
@@ -240,7 +240,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="20dp"
-                android:background="#33000000"
+                android:background="@color/home_black_tran"
                 android:orientation="vertical">
 
                 <TextView
@@ -268,7 +268,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="20dp"
-                android:background="#33000000"
+                android:background="@color/home_black_tran"
                 android:orientation="vertical">
 
                 <TextView
@@ -297,7 +297,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="20dp"
-                android:background="#33000000"
+                android:background="@color/home_black_tran"
                 android:orientation="vertical">
 
                 <TextView

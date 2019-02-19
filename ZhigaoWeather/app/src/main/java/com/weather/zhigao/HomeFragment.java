@@ -128,49 +128,6 @@ public class HomeFragment extends Fragment {
         initData(weatherBroadcast);
 
 
-//        Map<String, String> params = new HashMap<>();
-//        params.put("location", "CN101010300");
-//        params.put("key", "227849effc2b4e83b4cf1b0caf743cf9");
-//        OkhttpUtil.getInstance(getActivity()).getDataAsync(Urls.url_weather, params, new ResponseCallBack() {
-//            @Override
-//            public void onFailure(String error) {
-//
-//            }
-//
-//            @Override
-//            public void onResponse(String response) {
-//                try {
-//                    JSONObject object = new JSONObject(response);
-//                    WeatherForecastEntity weatherBroadcast = new Gson().fromJson(response, WeatherForecastEntity.class);
-////                    forecastList = new Gson().fromJson(object.getString("HeWeather6"),
-////                            new TypeToken<List<WeatherBroadcast>>() {
-////                            }.getType());
-//                    forecastAdapter.setList(weatherBroadcast.getHeWeather6().get(0).getDaily_forecast());
-//                    hourlyForecastAdapter.setList(weatherBroadcast.getHeWeather6().get(0).getHourly());
-//                    lifeStyleAdapter.setList(weatherBroadcast.getHeWeather6().get(0).getLifestyle());
-//                    List<LifestyleBean> lifestyleList = weatherBroadcast.getHeWeather6().get(0).getLifestyle();
-//                    tv_air_content.setText(lifestyleList.get(lifestyleList.size() - 1).getBrf());
-//
-//                    tv_position.setText(weatherBroadcast.getHeWeather6().get(0).getBasic().getLocation());
-//                    String date = weatherBroadcast.getHeWeather6().get(0).getUpdate().getLoc().split(" ")[0];
-//                    tv_date.setText(TimeUtil.getStringToDate(date) + " " + TimeUtil.dateToWeek(date) + " " + LunarUtil.getLunarDate());
-//                    tv_temperature.setText(weatherBroadcast.getHeWeather6().get(0).getNow().tmp);
-//                    tv_weather.setText(weatherBroadcast.getHeWeather6().get(0).getNow().cond_txt);
-//                    tv_lifestyle_weather.setText(weatherBroadcast.getHeWeather6().get(0).getLifestyle().get(1).brf);
-//                    DailyForecastBean bean = weatherBroadcast.getHeWeather6().get(0).getDaily_forecast().get(0);
-//                    tv_lifestyle_forecast.setText(bean.tmp_min + "~" + bean.tmp_max + " ℃");
-//                    tv_lifestyle_wind.setText(bean.wind_dir + bean.wind_sc + App.mContext.getString(R.string.degree));
-//                    tv_update_time.setText(getString(R.string.update_time) + weatherBroadcast.getHeWeather6().get(0).getUpdate().loc);
-//
-//
-//                } catch (JSONException e) {
-//                    // TODO Auto-generated catch block
-//                    e.printStackTrace();
-//                }
-////                    textView.setText(response);
-//            }
-//        });
-
         return mParentView;
     }
 
@@ -208,6 +165,7 @@ public class HomeFragment extends Fragment {
         long sunriseTime = TimeUtil.dateToLong(TimeUtil.ConverToDate(TimeUtil.getCurrentDate() + " 06:00"));
         long sunsetTime = TimeUtil.dateToLong(TimeUtil.ConverToDate(TimeUtil.getCurrentDate() + " 19:00"));
         long currentTime = System.currentTimeMillis();
+        //计算现在是白天还是黑天，现在设置固定白天时间为 06:00 - 19:00
         if (sunriseTime < currentTime && sunsetTime > currentTime) {
 
             ll_root.setBackgroundResource(getDayBackgroundId(cond_txt));
@@ -224,7 +182,8 @@ public class HomeFragment extends Fragment {
         forecast_recyclerview.addItemDecoration(new RecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL));
         forecast_recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-//        //解决数据加载不完的问题
+//        //以下三条解决RecyclerView和NestedScrollView的冲突
+        //解决数据加载不完的问题
 //        forecast_recyclerview.setNestedScrollingEnabled(false);
 //        forecast_recyclerview.setHasFixedSize(true);
 //        //解决数据加载完成后, 没有停留在顶部的问题
