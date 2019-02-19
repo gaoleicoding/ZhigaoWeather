@@ -64,7 +64,7 @@
                 android:paddingRight="10dp"
                 android:paddingBottom="8dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
+                android:textColorHint="#ddffffff"
                 android:textSize="16sp" />
 
             </LinearLayout>

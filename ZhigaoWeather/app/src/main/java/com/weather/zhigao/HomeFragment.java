@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -184,17 +185,21 @@ public class HomeFragment extends Fragment {
 
         forecastAdapter.setList(weatherBroadcast.getHeWeather6().get(0).getDaily_forecast());
         hourlyForecastAdapter.setList(weatherBroadcast.getHeWeather6().get(0).getHourly());
-        lifeStyleAdapter.setList(weatherBroadcast.getHeWeather6().get(0).getLifestyle());
-        List<LifestyleBean> lifestyleList = weatherBroadcast.getHeWeather6().get(0).getLifestyle();
-        tv_air_content.setText(lifestyleList.get(lifestyleList.size() - 1).getBrf());
 
-        String location=weatherBroadcast.getHeWeather6().get(0).getBasic().getLocation();
+        List<LifestyleBean> lifestyleList = weatherBroadcast.getHeWeather6().get(0).getLifestyle();
+        if (lifestyleList != null && lifestyleList.size() > 0) {
+            lifeStyleAdapter.setList(lifestyleList);
+            tv_air_content.setText(lifestyleList.get(lifestyleList.size() - 1).getBrf());
+            tv_lifestyle_weather.setText(lifestyleList.get(1).brf);
+        }
+        String location = weatherBroadcast.getHeWeather6().get(0).getBasic().getLocation();
         tv_position.setText(location);
         String date = weatherBroadcast.getHeWeather6().get(0).getUpdate().getLoc().split(" ")[0];
         tv_date.setText(TimeUtil.getStringToDate(date) + " " + TimeUtil.dateToWeek(date) + " " + LunarUtil.getLunarDate());
         tv_temperature.setText(weatherBroadcast.getHeWeather6().get(0).getNow().tmp);
-        tv_weather.setText(weatherBroadcast.getHeWeather6().get(0).getNow().cond_txt);
-        tv_lifestyle_weather.setText(weatherBroadcast.getHeWeather6().get(0).getLifestyle().get(1).brf);
+        String cond_txt = weatherBroadcast.getHeWeather6().get(0).getNow().cond_txt;
+        tv_weather.setText(cond_txt);
+
         DailyForecastBean bean = weatherBroadcast.getHeWeather6().get(0).getDaily_forecast().get(0);
         tv_lifestyle_forecast.setText(bean.tmp_min + "~" + bean.tmp_max + " ℃");
         tv_lifestyle_wind.setText(bean.wind_dir + bean.wind_sc + App.mContext.getString(R.string.degree));
@@ -204,10 +209,11 @@ public class HomeFragment extends Fragment {
         long sunsetTime = TimeUtil.dateToLong(TimeUtil.ConverToDate(TimeUtil.getCurrentDate() + " 19:00"));
         long currentTime = System.currentTimeMillis();
         if (sunriseTime < currentTime && sunsetTime > currentTime) {
-            ll_root.setBackgroundResource(R.mipmap.background_sunny_day);
+
+            ll_root.setBackgroundResource(getDayBackgroundId(cond_txt));
 
         } else {
-            ll_root.setBackgroundResource(R.mipmap.background_sunny_night);
+            ll_root.setBackgroundResource(getNightBackgroundId(cond_txt));
         }
     }
 
@@ -251,5 +257,34 @@ public class HomeFragment extends Fragment {
         lifestyle_recyclerview.setAdapter(lifeStyleAdapter);
     }
 
+    private int getDayBackgroundId(final String desc) {
+        if (desc.contains(getString(R.string.sunny)))
+            return R.mipmap.day_qing_yun;
+        if (desc.contains(getString(R.string.cloud)))
+            return R.mipmap.day_yun;
+        if (desc.contains(getString(R.string.overcast)))
+            return R.mipmap.day_yintian;
+        if (desc.contains(getString(R.string.snow)))
+            return R.mipmap.day_yu_xue;
+        if (desc.contains(getString(R.string.rain)))
+            return R.mipmap.day_yu;
+        if (desc.contains(getString(R.string.haze)))
+            return R.mipmap.wumai;
+        return R.mipmap.day_qing_yun;
+    }
 
+    private int getNightBackgroundId(final String desc) {
+        if (desc.contains(getString(R.string.sunny)))
+            return R.mipmap.background_sunny_night;
+        if (desc.contains(getString(R.string.cloud)))
+            return R.mipmap.night_yun;
+        if (desc.contains(getString(R.string.overcast)))
+            return R.mipmap.night_yintian;
+        if (desc.contains(getString(R.string.snow)))
+            return R.mipmap.night_yu_xue;
+        if (desc.contains(getString(R.string.rain)))
+            return R.mipmap.night_yu;
+
+        return R.mipmap.background_sunny_night;
+    }
 }

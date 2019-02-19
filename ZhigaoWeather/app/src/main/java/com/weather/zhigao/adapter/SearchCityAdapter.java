@@ -44,7 +44,7 @@ public class SearchCityAdapter extends RecyclerView.Adapter<SearchCityAdapter.My
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final BasicBean bean = list.get(position);
 
-        holder.tv_city.setText(bean.getLocation()+"-"+bean.getParent_city());
+        holder.tv_city.setText(bean.getLocation()+" - "+bean.getAdmin_area());
         holder.root_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
