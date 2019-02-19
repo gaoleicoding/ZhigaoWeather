@@ -109,10 +109,11 @@ public class MainActivity extends AppCompatActivity {
 
         super.onNewIntent(intent);
         WeatherForecastEntity weatherBroadcast = intent.getParcelableExtra("weather");
-        homeFragment.initData(weatherBroadcast);
-        //添加城市的时候调用，更新数据
-        setRecyclerView();
-
+        if(weatherBroadcast!=null) {
+            homeFragment.initData(weatherBroadcast);
+            //添加城市的时候调用，更新数据
+            setRecyclerView();
+        }
 
     }
 

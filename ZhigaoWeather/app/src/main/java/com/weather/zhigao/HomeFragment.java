@@ -1,5 +1,6 @@
 package com.weather.zhigao;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
@@ -32,6 +33,7 @@ import com.weather.zhigao.model.WeatherForecastEntity.HeWeather6Bean.LifestyleBe
 import com.weather.zhigao.net.OkhttpUtil;
 import com.weather.zhigao.net.ResponseCallBack;
 import com.weather.zhigao.net.Urls;
+import com.weather.zhigao.utils.LogUtil;
 import com.weather.zhigao.utils.LunarUtil;
 import com.weather.zhigao.utils.ScreenUtils;
 import com.weather.zhigao.utils.TimeUtil;
@@ -136,6 +138,11 @@ public class HomeFragment extends Fragment {
     }
 
     public void initData(WeatherForecastEntity weatherBroadcast) {
+
+        Intent intent = new Intent(getActivity(), MyService.class);
+        intent.putExtra("weather", weatherBroadcast);
+        getActivity().startService(intent);
+
         initRecyclerView();
         initHourlyRecyclerView();
         initLifeStyleRecyclerView();
@@ -150,10 +157,12 @@ public class HomeFragment extends Fragment {
             tv_lifestyle_weather.setText(lifestyleList.get(1).brf);
         }
         String location = weatherBroadcast.getHeWeather6().get(0).getBasic().getLocation();
+        LogUtil.d(TAG,"initData，location："+location);
         tv_position.setText(location);
         String date = weatherBroadcast.getHeWeather6().get(0).getUpdate().getLoc().split(" ")[0];
         tv_date.setText(TimeUtil.getStringToDate(date) + " " + TimeUtil.dateToWeek(date) + " " + LunarUtil.getLunarDate());
-        tv_temperature.setText(weatherBroadcast.getHeWeather6().get(0).getNow().tmp);
+        String nowTemp=weatherBroadcast.getHeWeather6().get(0).getNow().tmp;
+        tv_temperature.setText(nowTemp);
         String cond_txt = weatherBroadcast.getHeWeather6().get(0).getNow().cond_txt;
         tv_weather.setText(cond_txt);
 
