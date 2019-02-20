@@ -79,10 +79,13 @@ public class MyService extends Service {
             notificationIntent = new Intent(this, MainActivity.class);
             notificationIntent.putExtra("weather", weatherBroadcast);
             notification.contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, FLAG_CANCEL_CURRENT);
+//            notificationManager.notify(1, notification);
+            //使用这个而不是用上面的目的是：1.为了Notification不容易被杀死，和前台service的进程优先级保持一致 2.在下拉通知栏中，不能点清除按钮清除,使其能够常驻
             startForeground(1, notification);
         }
     }
 
+    //把创建Notification放在service目的是为了app退出依然能够在通知栏中看到天气信息
     private void createNotification(WeatherForecastEntity weatherBroadcast) {
         remoteViews = new RemoteViews(getPackageName(), R.layout.layout_notification);
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -95,11 +98,13 @@ public class MyService extends Service {
                     .setSmallIcon(R.mipmap.icon_app_round)
                     //设置自定义的style
 //                    .setStyle(new NotificationCompat.DecoratedCustomViewStyle())
+                    .setPriority(1000)
                     .setCustomContentView(remoteViews).build();
         } else {
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                     .setContent(remoteViews)
                     .setSmallIcon(R.mipmap.icon_app_round)
+                    .setPriority(1000)
                     //setOngoing表示它为一个正在进行的通知
                     .setOngoing(true);
             notification = notificationBuilder.build();

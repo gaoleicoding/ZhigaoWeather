@@ -5,7 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-
+import com.weather.zhigao.model.WeatherForecastEntity;
+import com.weather.zhigao.model.WeatherForecastEntity.HeWeather6Bean.DailyForecastBean;
 import com.weather.zhigao.model.CityAddBean;
 import com.weather.zhigao.model.CityTable;
 import com.weather.zhigao.utils.LogUtil;
@@ -17,13 +18,31 @@ import java.util.List;
  * 使用SQL语句增删改查
  */
 
-public class DataBaseDao {
-    String TAG = "DataBaseDao";
-    private final MyDBHelper mDbHelper;
+public class DatabaseManager {
+    String TAG = "DatabaseManager";
 
-    public DataBaseDao(Context context) {
-        mDbHelper = new MyDBHelper(context);
+
+    private static MyDBHelper mDbHelper;
+    private static DatabaseManager instance;
+
+    private DatabaseManager() {
     }
+
+    public static DatabaseManager getInstance(Context context) {
+
+        if (instance == null) {
+            synchronized (DatabaseManager.class) {
+                instance = new DatabaseManager();
+                mDbHelper = new MyDBHelper(context);
+            }
+        }
+        return instance;
+    }
+
+
+//    public DatabaseManager(Context context) {
+//        mDbHelper = new MyDBHelper(context);
+//    }
 
     /**
      * 插入
@@ -126,5 +145,15 @@ public class DataBaseDao {
 
         cursor.close();
         return list;
+    }
+
+    public CityAddBean getCityBean(WeatherForecastEntity weatherBroadcast){
+        String location = weatherBroadcast.getHeWeather6().get(0).getBasic().getLocation();
+        String cond_txt = weatherBroadcast.getHeWeather6().get(0).getNow().cond_txt;
+        DailyForecastBean bean = weatherBroadcast.getHeWeather6().get(0).getDaily_forecast().get(0);
+        String tmp_min = bean.tmp_min;
+        String tmp_max = bean.tmp_max;
+        CityAddBean cityAddBean = new CityAddBean(location, cond_txt, tmp_min, tmp_max);
+        return cityAddBean;
     }
 }

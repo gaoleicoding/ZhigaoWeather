@@ -21,6 +21,7 @@ import com.weather.zhigao.adapter.LifeStyleAdapter;
 import com.weather.zhigao.adapter.WeatherForecastAdapter;
 import com.weather.zhigao.adapter.divider.RecycleViewDivider;
 import com.weather.zhigao.application.App;
+import com.weather.zhigao.db.DatabaseManager;
 import com.weather.zhigao.model.WeatherForecastEntity;
 import com.weather.zhigao.model.WeatherForecastEntity.HeWeather6Bean.DailyForecastBean;
 import com.weather.zhigao.model.WeatherForecastEntity.HeWeather6Bean.HourlyBean;
@@ -125,7 +126,6 @@ public class HomeFragment extends Fragment {
     }
 
 
-
     public void setData(WeatherForecastEntity weatherBroadcast) {
         this.weatherBroadcast = weatherBroadcast;
     }
@@ -175,6 +175,8 @@ public class HomeFragment extends Fragment {
         } else {
             ll_root.setBackgroundResource(Weather2IconUtil.getNightBackgroundId(cond_txt));
         }
+        //及时更新数据库中城市的天气信息
+        DatabaseManager.getInstance(getActivity()).update(location, DatabaseManager.getInstance(getActivity()).getCityBean(weatherBroadcast));
     }
 
 

@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.jaeger.library.StatusBarUtil;
 import com.weather.zhigao.adapter.CityAddAdapter;
-import com.weather.zhigao.db.DataBaseDao;
+import com.weather.zhigao.db.DatabaseManager;
 import com.weather.zhigao.model.CityAddBean;
 import com.weather.zhigao.model.WeatherForecastEntity;
 import com.weather.zhigao.net.OkhttpUtil;
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     RelativeLayout rl_drawer;
     HomeFragment homeFragment;
     ImageView iv_add;
-    DataBaseDao dataBaseDao;
+    DatabaseManager dataBaseDao;
     RecyclerView city_recyclerview;
     List<CityAddBean> cityList;
     CityAddAdapter cityAddAdapter;
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         StatusBarUtil.setTransparent(this);
         setContentView(R.layout.activity_main);
-        dataBaseDao = new DataBaseDao(this);
+        dataBaseDao = DatabaseManager.getInstance(this);
         homeFragment = new HomeFragment();
 
         mDrawerLayout = findViewById(R.id.drawer_layout);

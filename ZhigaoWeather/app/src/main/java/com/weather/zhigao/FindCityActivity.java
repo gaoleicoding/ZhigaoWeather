@@ -2,7 +2,6 @@ package com.weather.zhigao;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,7 +20,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.jaeger.library.StatusBarUtil;
 import com.weather.zhigao.adapter.HotCityAdapter;
-import com.weather.zhigao.db.DataBaseDao;
+import com.weather.zhigao.db.DatabaseManager;
 import com.weather.zhigao.model.WeatherForecastEntity.HeWeather6Bean.DailyForecastBean;
 import com.weather.zhigao.adapter.SearchCityAdapter;
 import com.weather.zhigao.adapter.divider.RecycleViewDivider;
@@ -34,11 +32,9 @@ import com.weather.zhigao.net.OkhttpUtil;
 import com.weather.zhigao.net.ResponseCallBack;
 import com.weather.zhigao.net.Urls;
 import com.weather.zhigao.utils.KeyboardUtils;
-import com.weather.zhigao.utils.LogUtil;
 import com.weather.zhigao.utils.SPUtils;
 import com.weather.zhigao.utils.ScreenUtils;
 
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -116,7 +112,7 @@ public class FindCityActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String content = charSequence.toString();
-                if(content.trim().length()>0)
+                if (content.trim().length() > 0)
                     tv_cancel.setVisibility(View.VISIBLE);
             }
 
@@ -126,15 +122,15 @@ public class FindCityActivity extends AppCompatActivity {
             }
         });
 
-tv_cancel.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        et_search.setText("");
-        search_city_recyclerview.setVisibility(View.GONE);
-        searchCityList.clear();
-        KeyboardUtils.hideKeyboard(et_search);
-    }
-});
+        tv_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                et_search.setText("");
+                search_city_recyclerview.setVisibility(View.GONE);
+                searchCityList.clear();
+                KeyboardUtils.hideKeyboard(et_search);
+            }
+        });
     }
 
     private void initHotCityRecyclerView() {
@@ -196,19 +192,14 @@ tv_cancel.setOnClickListener(new View.OnClickListener() {
     }
 
     private void inserData(WeatherForecastEntity weatherBroadcast) {
-        String location = weatherBroadcast.getHeWeather6().get(0).getBasic().getLocation();
 
-        String cond_txt = weatherBroadcast.getHeWeather6().get(0).getNow().cond_txt;
-        DailyForecastBean bean = weatherBroadcast.getHeWeather6().get(0).getDaily_forecast().get(0);
-        String tmp_min = bean.tmp_min;
-        String tmp_max = bean.tmp_max;
-        CityAddBean cityAddBean = new CityAddBean(location, cond_txt, tmp_min, tmp_max);
-        DataBaseDao dataBaseDao = new DataBaseDao(this);
+        CityAddBean cityAddBean = DatabaseManager.getInstance(this).getCityBean(weatherBroadcast);
+        DatabaseManager dataBaseDao = DatabaseManager.getInstance(this);
         if (dataBaseDao != null)
             dataBaseDao.insert(cityAddBean);
 
-
     }
+
     //提前获取城市天气信息，这样进入主界面直接获取传递过来的数据，而不用从网络上获取，显示速度快，用户体验好
     private void beginSearch(String location) {
         KeyboardUtils.hideKeyboard(et_search);
@@ -224,7 +215,7 @@ tv_cancel.setOnClickListener(new View.OnClickListener() {
             public void onResponse(String response) {
                 final SearchCityEntity searchCityEntity = new Gson().fromJson(response, SearchCityEntity.class);
                 searchCityList = searchCityEntity.getHeWeather6().get(0).getBasic();
-                if (searchCityList==null||searchCityList.size() == 0) {
+                if (searchCityList == null || searchCityList.size() == 0) {
                     Toast.makeText(FindCityActivity.this, "城市不存在，请重新输入", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -234,4 +225,5 @@ tv_cancel.setOnClickListener(new View.OnClickListener() {
             }
         });
     }
+
 }
