@@ -121,7 +121,8 @@ public class MyService extends Service {
         // the NotificationChannel class is new and not in the support library
         String channel_id = "channel_01";
         String channel_name = "我是渠道名字";
-        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+        // IMPORTANCE_LOW 开启通知，不会弹出，不发出提示音，状态栏中显示
+        int importance = NotificationManager.IMPORTANCE_LOW;
         NotificationChannel channel = new NotificationChannel(channel_id, channel_name, importance);
         channel.setDescription(channel_name);
         // Register the channel with the system; you can't change the importance
