@@ -177,6 +177,10 @@ public class HomeFragment extends Fragment {
         }
         //及时更新数据库中城市的天气信息
         DatabaseManager.getInstance(getActivity()).update(location, DatabaseManager.getInstance(getActivity()).getCityBean(weatherBroadcast));
+
+        MainActivity mainActivity=(MainActivity)getActivity();
+        //在更新数据库中城市的天气信息后，显示添加的城市天气数据，保持最新
+        mainActivity.setRecyclerView();
     }
 
 

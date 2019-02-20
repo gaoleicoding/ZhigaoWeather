@@ -107,12 +107,12 @@ public class MainActivity extends AppCompatActivity {
         if (weatherBroadcast != null) {
             homeFragment.initData(weatherBroadcast);
             //添加城市的时候调用，更新数据
-            setRecyclerView();
+//            setRecyclerView();
         }
 
     }
 
-    private void setRecyclerView() {
+    public void setRecyclerView() {
         cityList = dataBaseDao.queryAll();
         if (cityList != null)
             cityAddAdapter.setList(cityList);
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
         city_recyclerview.setAdapter(cityAddAdapter);
 
-        setRecyclerView();
+//        setRecyclerView();
 
         cityAddAdapter.setOnItemClickListener(new CityAddAdapter.OnItemClickListener() {
             @Override
