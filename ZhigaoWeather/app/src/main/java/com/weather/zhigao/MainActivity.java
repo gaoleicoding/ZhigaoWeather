@@ -19,14 +19,9 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.jaeger.library.StatusBarUtil;
 import com.weather.zhigao.adapter.CityAddAdapter;
-import com.weather.zhigao.adapter.HotCityAdapter;
-import com.weather.zhigao.adapter.SearchCityAdapter;
-import com.weather.zhigao.adapter.WeatherForecastAdapter;
-import com.weather.zhigao.adapter.divider.RecycleViewDivider;
 import com.weather.zhigao.db.DataBaseDao;
 import com.weather.zhigao.model.CityAddBean;
 import com.weather.zhigao.model.WeatherForecastEntity;
-import com.weather.zhigao.model.WeatherForecastEntity.HeWeather6Bean.DailyForecastBean;
 import com.weather.zhigao.net.OkhttpUtil;
 import com.weather.zhigao.net.ResponseCallBack;
 import com.weather.zhigao.net.Urls;
@@ -109,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
         super.onNewIntent(intent);
         WeatherForecastEntity weatherBroadcast = intent.getParcelableExtra("weather");
-        if(weatherBroadcast!=null) {
+        if (weatherBroadcast != null) {
             homeFragment.initData(weatherBroadcast);
             //添加城市的时候调用，更新数据
             setRecyclerView();

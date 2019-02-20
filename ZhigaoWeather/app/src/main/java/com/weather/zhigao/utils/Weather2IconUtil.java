@@ -6,6 +6,38 @@ import com.weather.zhigao.R;
 import com.weather.zhigao.application.App;
 
 public class Weather2IconUtil {
+    public static int getDayBackgroundId(final String desc) {
+        if (desc.contains(App.mContext.getString(R.string.sunny)))
+            return R.mipmap.day_qing_yun;
+        if (desc.contains(App.mContext.getString(R.string.cloud)))
+            return R.mipmap.day_yun;
+        if (desc.contains(App.mContext.getString(R.string.overcast)))
+            return R.mipmap.day_yintian;
+        if (desc.contains(App.mContext.getString(R.string.snow)))
+            return R.mipmap.day_yu_xue;
+        if (desc.contains(App.mContext.getString(R.string.rain)))
+            return R.mipmap.day_rain;
+        if (desc.contains(App.mContext.getString(R.string.haze)))
+            return R.mipmap.wumai;
+        if (desc.contains(App.mContext.getString(R.string.foggy)))
+            return R.mipmap.day_fog;
+        return R.mipmap.day_qing_yun;
+    }
+
+    public static int getNightBackgroundId(final String desc) {
+        if (desc.contains(App.mContext.getString(R.string.sunny)))
+            return R.mipmap.background_sunny_night;
+        if (desc.contains(App.mContext.getString(R.string.cloud)))
+            return R.mipmap.night_yun;
+        if (desc.contains(App.mContext.getString(R.string.overcast)))
+            return R.mipmap.night_yintian;
+        if (desc.contains(App.mContext.getString(R.string.snow)))
+            return R.mipmap.night_yu_xue;
+        if (desc.contains(App.mContext.getString(R.string.rain)))
+            return R.mipmap.night_yu;
+
+        return R.mipmap.background_sunny_night;
+    }
 
     public static int getWeatherIconId(final String desc) {
         if (!TextUtils.isEmpty(desc)) {

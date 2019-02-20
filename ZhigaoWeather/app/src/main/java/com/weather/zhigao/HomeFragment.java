@@ -1,15 +1,13 @@
 package com.weather.zhigao;
 
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.jaeger.library.StatusBarUtil;
 import com.weather.zhigao.adapter.HourlyForecastAdapter;
 import com.weather.zhigao.adapter.LifeStyleAdapter;
 import com.weather.zhigao.adapter.WeatherForecastAdapter;
@@ -30,21 +25,16 @@ import com.weather.zhigao.model.WeatherForecastEntity;
 import com.weather.zhigao.model.WeatherForecastEntity.HeWeather6Bean.DailyForecastBean;
 import com.weather.zhigao.model.WeatherForecastEntity.HeWeather6Bean.HourlyBean;
 import com.weather.zhigao.model.WeatherForecastEntity.HeWeather6Bean.LifestyleBean;
-import com.weather.zhigao.net.OkhttpUtil;
-import com.weather.zhigao.net.ResponseCallBack;
-import com.weather.zhigao.net.Urls;
 import com.weather.zhigao.utils.LogUtil;
 import com.weather.zhigao.utils.LunarUtil;
 import com.weather.zhigao.utils.ScreenUtils;
 import com.weather.zhigao.utils.TimeUtil;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.weather.zhigao.utils.Weather2IconUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class HomeFragment extends Fragment {
     TextView tv_position, tv_date, tv_temperature, tv_weather, tv_lifestyle_weather,
@@ -63,6 +53,7 @@ public class HomeFragment extends Fragment {
     NestedScrollView scrollView;
     int homeHeight, bottomHeight;
     WeatherForecastEntity weatherBroadcast;
+    private NotificationManager notificationManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -95,7 +86,7 @@ public class HomeFragment extends Fragment {
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) rl_title.getLayoutParams();
         rl_title.setPadding(0, statusBarHeight, 0, ScreenUtils.dp2px(getActivity(), 30));
         rl_title.setLayoutParams(layoutParams);
-
+        notificationManager = (NotificationManager) getActivity().getSystemService(NOTIFICATION_SERVICE);
         iv_expand_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,6 +124,8 @@ public class HomeFragment extends Fragment {
         return mParentView;
     }
 
+
+
     public void setData(WeatherForecastEntity weatherBroadcast) {
         this.weatherBroadcast = weatherBroadcast;
     }
@@ -157,11 +150,11 @@ public class HomeFragment extends Fragment {
             tv_lifestyle_weather.setText(lifestyleList.get(1).brf);
         }
         String location = weatherBroadcast.getHeWeather6().get(0).getBasic().getLocation();
-        LogUtil.d(TAG,"initData，location："+location);
+        LogUtil.d(TAG, "initData，location：" + location);
         tv_position.setText(location);
         String date = weatherBroadcast.getHeWeather6().get(0).getUpdate().getLoc().split(" ")[0];
         tv_date.setText(TimeUtil.getStringToDate(date) + " " + TimeUtil.dateToWeek(date) + " " + LunarUtil.getLunarDate());
-        String nowTemp=weatherBroadcast.getHeWeather6().get(0).getNow().tmp;
+        String nowTemp = weatherBroadcast.getHeWeather6().get(0).getNow().tmp;
         tv_temperature.setText(nowTemp);
         String cond_txt = weatherBroadcast.getHeWeather6().get(0).getNow().cond_txt;
         tv_weather.setText(cond_txt);
@@ -177,10 +170,10 @@ public class HomeFragment extends Fragment {
         //计算现在是白天还是黑天，现在设置固定白天时间为 06:00 - 19:00
         if (sunriseTime < currentTime && sunsetTime > currentTime) {
 
-            ll_root.setBackgroundResource(getDayBackgroundId(cond_txt));
+            ll_root.setBackgroundResource(Weather2IconUtil.getDayBackgroundId(cond_txt));
 
         } else {
-            ll_root.setBackgroundResource(getNightBackgroundId(cond_txt));
+            ll_root.setBackgroundResource(Weather2IconUtil.getNightBackgroundId(cond_txt));
         }
     }
 
@@ -225,34 +218,5 @@ public class HomeFragment extends Fragment {
         lifestyle_recyclerview.setAdapter(lifeStyleAdapter);
     }
 
-    private int getDayBackgroundId(final String desc) {
-        if (desc.contains(getString(R.string.sunny)))
-            return R.mipmap.day_qing_yun;
-        if (desc.contains(getString(R.string.cloud)))
-            return R.mipmap.day_yun;
-        if (desc.contains(getString(R.string.overcast)))
-            return R.mipmap.day_yintian;
-        if (desc.contains(getString(R.string.snow)))
-            return R.mipmap.day_yu_xue;
-        if (desc.contains(getString(R.string.rain)))
-            return R.mipmap.day_yu;
-        if (desc.contains(getString(R.string.haze)))
-            return R.mipmap.wumai;
-        return R.mipmap.day_qing_yun;
-    }
 
-    private int getNightBackgroundId(final String desc) {
-        if (desc.contains(getString(R.string.sunny)))
-            return R.mipmap.background_sunny_night;
-        if (desc.contains(getString(R.string.cloud)))
-            return R.mipmap.night_yun;
-        if (desc.contains(getString(R.string.overcast)))
-            return R.mipmap.night_yintian;
-        if (desc.contains(getString(R.string.snow)))
-            return R.mipmap.night_yu_xue;
-        if (desc.contains(getString(R.string.rain)))
-            return R.mipmap.night_yu;
-
-        return R.mipmap.background_sunny_night;
-    }
 }
