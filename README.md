@@ -8,7 +8,10 @@ app扫码下载体验
  
  app效果图
 
- 
+
+ ![image](https://github.com/gaoleicoding/ZhigaoWeather/raw/master/material/screenshots/3.jpg)
+
+
  ![image](https://github.com/gaoleicoding/ZhigaoWeather/raw/master/material/screenshots/4.jpg)
 
  
