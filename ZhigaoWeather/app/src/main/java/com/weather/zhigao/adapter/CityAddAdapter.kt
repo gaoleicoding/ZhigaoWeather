@@ -45,14 +45,14 @@ class CityAddAdapter(var context: Context, var list: List<CityAddBean>) : Recycl
         val bean = list[position]
         val currentCity = SPUtils.getParam(context, "currentCity", "") as String
 
-        if (currentCity == bean.getLocation()) {
+        if (currentCity == bean.location) {
             holder.root_view.setBackgroundColor(Color.parseColor("#ecf5fa"))
         } else
             holder.root_view.setBackgroundColor(Color.parseColor("#f3f3f3"))
         holder.tv_location.text = bean.location
         holder.tv_temperature.text = bean.tmp_min + "~" + bean.tmp_max + " ℃"
         holder.iv_weather.setImageResource(getWeatherIconId(bean.cond_txt))
-        if (isEdit && currentCity != bean.getLocation())
+        if (isEdit && currentCity != bean.location)
         //如果是正在编辑状态，且不是正在显示的城市
             holder.iv_del.visibility = View.VISIBLE
         else

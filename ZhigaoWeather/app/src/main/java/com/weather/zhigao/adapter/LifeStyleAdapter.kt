@@ -1,7 +1,6 @@
 package com.weather.zhigao.adapter
 
 import android.content.Context
-import android.graphics.drawable.BitmapDrawable
 import android.support.v7.widget.RecyclerView
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -13,6 +12,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 
 import com.weather.zhigao.R
+import com.weather.zhigao.model.WeatherForecastEntity
 import com.weather.zhigao.model.WeatherForecastEntity.HeWeather6Bean.LifestyleBean
 
 
@@ -33,9 +33,9 @@ class LifeStyleAdapter(var context: Context, var list: List<LifestyleBean>) : Re
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val bean = list[position]
 
-        holder.tv_title.text = getStyleIndicator(bean.getType())
-        holder.tv_content.text = bean.getBrf()
-        holder.iv_type.setImageResource(getTypeIconId(bean.getType()))
+        holder.tv_title.text = getStyleIndicator(bean.type)
+        holder.tv_content.text = bean.brf
+        holder.iv_type.setImageResource(getTypeIconId(bean.type))
         holder.rl_root.setOnClickListener { openPop(bean) }
     }
 
@@ -146,7 +146,7 @@ class LifeStyleAdapter(var context: Context, var list: List<LifestyleBean>) : Re
     /**
      * 弹出底部对话框
      */
-    fun openPop(bean: LifestyleBean) {
+    fun openPop(bean: WeatherForecastEntity.HeWeather6Bean.LifestyleBean) {
         val popView = LayoutInflater.from(context).inflate(
                 R.layout.lifestyle_item_layout, null)
         val rootView = popView.findViewById<View>(R.id.root_main)
@@ -160,10 +160,10 @@ class LifeStyleAdapter(var context: Context, var list: List<LifestyleBean>) : Re
         tv_title = popView.findViewById(R.id.tv_title)
         tv_content = popView.findViewById(R.id.tv_content)
         tv_lifestyle_detail = popView.findViewById(R.id.tv_lifestyle_detail)
-        iv_type.setImageResource(getTypeBigIconId(bean.getType()))
-        tv_title.text = getStyleIndicator(bean.getType())
-        tv_content.text = bean.getBrf()
-        tv_lifestyle_detail.text = bean.getTxt()
+        iv_type.setImageResource(getTypeBigIconId(bean.type))
+        tv_title.text = getStyleIndicator(bean.type)
+        tv_content.text = bean.brf
+        tv_lifestyle_detail.text = bean.txt
 
 
         val popupWindow = PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)

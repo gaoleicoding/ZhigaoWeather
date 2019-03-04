@@ -11,6 +11,9 @@ android {
             storePassword 'android'
         }
     }
+    androidExtensions {
+        experimental = true
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.weather.zhigao"

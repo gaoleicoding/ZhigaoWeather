@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 
 import com.weather.zhigao.R
+import com.weather.zhigao.model.WeatherForecastEntity
 import com.weather.zhigao.model.WeatherForecastEntity.HeWeather6Bean.HourlyBean
 import com.weather.zhigao.utils.Weather2IconUtil
 
