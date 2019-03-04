@@ -170,9 +170,9 @@ class MainActivity : AppCompatActivity() {
 
     //提前获取城市天气信息
     private fun getWeatherInfo(location: String) {
-        val params = HashMap<String, String>()
+        val params = HashMap<String, String?>()
         params["location"] = location
-        OkhttpUtil.getInstance(this).getDataAsync(Urls.url_weather, params, object : ResponseCallBack {
+        OkhttpUtil.getInstance(this)!!.getDataAsync(Urls.url_weather, params, object : ResponseCallBack {
             override fun onFailure(error: String) {
 
             }

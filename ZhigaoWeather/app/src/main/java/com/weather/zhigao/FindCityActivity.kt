@@ -135,7 +135,7 @@ class FindCityActivity : AppCompatActivity() {
         hotCityAdapter.setOnItemClickListener(object : HotCityAdapter.OnItemClickListener {
             override fun onItemClick(view: View, postion: Int) {
                 val location= hotCityList[postion].location
-                SPUtils.setParam(this@FindCityActivity, "currentCity", location)
+                SPUtils.setParam(this@FindCityActivity, "currentCity", location as Any)
                 getWeatherInfoAdvance(location)
             }
         })
@@ -161,7 +161,7 @@ class FindCityActivity : AppCompatActivity() {
         if (hasChoosenCity) return
         val params = HashMap<String, String?>()
         params["location"] = location
-        OkhttpUtil.getInstance(this).getDataAsync(Urls.url_weather, params, object : ResponseCallBack {
+        OkhttpUtil.getInstance(this)!!.getDataAsync(Urls.url_weather, params, object : ResponseCallBack {
             override fun onFailure(error: String) {
 
             }
@@ -195,9 +195,9 @@ class FindCityActivity : AppCompatActivity() {
     //提前获取城市天气信息，这样进入主界面直接获取传递过来的数据，而不用从网络上获取，显示速度快，用户体验好
     private fun beginSearch(location: String) {
         KeyboardUtils.hideKeyboard(et_search)
-        val params = HashMap<String, String>()
+        val params = HashMap<String, String?>()
         params["location"] = location
-        OkhttpUtil.getInstance(this).getDataAsync(Urls.url_find_city, params, object : ResponseCallBack {
+        OkhttpUtil.getInstance(this)!!.getDataAsync(Urls.url_find_city, params, object : ResponseCallBack {
             override fun onFailure(error: String) {
 
             }

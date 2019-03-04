@@ -95,7 +95,7 @@ class HomeFragment : Fragment() {
         tv_air_content = mParentView.findViewById(R.id.tv_air_content)
 
         //加入透明状态栏后，需要留出和状态栏高度一样的的空间
-        val statusBarHeight = ScreenUtils.getStatusHeight(activity)
+        val statusBarHeight = ScreenUtils.getStatusHeight(activity!!)
         val layoutParams = rl_title.layoutParams as LinearLayout.LayoutParams
         rl_title.setPadding(0, statusBarHeight, 0, ScreenUtils.dp2px(activity!!, 30f))
         rl_title.layoutParams = layoutParams
@@ -149,7 +149,7 @@ class HomeFragment : Fragment() {
         LogUtil.d(TAG, "initData，location：$location")
         tv_position.text = location
         val date = weatherBroadcast.heWeather6[0].getUpdate().getLoc().split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0]
-        tv_date.text = TimeUtil.getStringToDate(date) + " " + TimeUtil.dateToWeek(date) + " " + LunarUtil.getLunarDate()
+        tv_date.text = TimeUtil.getStringToDate(date) + " " + TimeUtil.dateToWeek(date) + " " + LunarUtil.lunarDate
         val nowTemp = weatherBroadcast.heWeather6[0].getNow().getTmp()
         tv_temperature.text = nowTemp
         val cond_txt = weatherBroadcast.heWeather6[0].getNow().getCond_txt()
@@ -160,8 +160,8 @@ class HomeFragment : Fragment() {
         tv_lifestyle_wind.text = bean.getWind_dir() + bean.getWind_sc() + App.mContext.getString(R.string.degree)
         tv_update_time.text = getString(R.string.update_time) + weatherBroadcast.heWeather6[0].getUpdate().getLoc()
 
-        val sunriseTime = TimeUtil.dateToLong(TimeUtil.ConverToDate(TimeUtil.getCurrentDate() + " 06:00")!!)
-        val sunsetTime = TimeUtil.dateToLong(TimeUtil.ConverToDate(TimeUtil.getCurrentDate() + " 19:00")!!)
+        val sunriseTime = TimeUtil.dateToLong(TimeUtil.ConverToDate(TimeUtil.currentDate + " 06:00")!!)
+        val sunsetTime = TimeUtil.dateToLong(TimeUtil.ConverToDate(TimeUtil.currentDate + " 19:00")!!)
         val currentTime = System.currentTimeMillis()
         //计算现在是白天还是黑天，现在设置固定白天时间为 06:00 - 19:00
         if (sunriseTime < currentTime && sunsetTime > currentTime) {

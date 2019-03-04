@@ -47,10 +47,10 @@ class SplashActivity : AppCompatActivity() {
 
     //提前获取热搜城市信息，这样进入添加城市界面直接获取传递过来的数据，而不用从网络上获取，显示速度快，用户体验好
     private fun getHotCityAdvance() {
-        val map = HashMap<String, String>()
+        val map = HashMap<String, String?>()
         map["group"] = "cn"
         map["number"] = "50"
-        OkhttpUtil.getInstance(this).getDataAsync(Urls.url_hot_city, map, object : ResponseCallBack {
+        OkhttpUtil.getInstance(this)!!.getDataAsync(Urls.url_hot_city, map, object : ResponseCallBack {
             override fun onFailure(error: String) {
 
             }
@@ -73,10 +73,10 @@ class SplashActivity : AppCompatActivity() {
 
     //提前获取城市天气信息，这样进入主界面直接获取传递过来的数据，而不用从网络上获取，显示速度快，用户体验好
     private fun getWeatherInfoAdvance(location: String) {
-        val params = HashMap<String, String>()
+        val params = HashMap<String, String?>()
         params["location"] = location
 
-        OkhttpUtil.getInstance(this).getDataAsync(Urls.url_weather, params, object : ResponseCallBack {
+        OkhttpUtil.getInstance(this)!!.getDataAsync(Urls.url_weather, params, object : ResponseCallBack {
             override fun onFailure(error: String) {
 
             }
