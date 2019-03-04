@@ -13,7 +13,7 @@ import android.widget.TextView
 
 import com.weather.zhigao.R
 import com.weather.zhigao.model.WeatherForecastEntity
-import com.weather.zhigao.model.WeatherForecastEntity.HeWeather6Bean.LifestyleBean
+import com.weather.zhigao.model.weather.LifestyleBean
 
 
 class LifeStyleAdapter(var context: Context, var list: List<LifestyleBean>) : RecyclerView.Adapter<LifeStyleAdapter.MyViewHolder>() {
@@ -33,9 +33,9 @@ class LifeStyleAdapter(var context: Context, var list: List<LifestyleBean>) : Re
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val bean = list[position]
 
-        holder.tv_title.text = getStyleIndicator(bean.type)
+        holder.tv_title.text = getStyleIndicator(bean?.type)
         holder.tv_content.text = bean.brf
-        holder.iv_type.setImageResource(getTypeIconId(bean.type))
+        holder.iv_type.setImageResource(getTypeIconId(bean?.type))
         holder.rl_root.setOnClickListener { openPop(bean) }
     }
 
@@ -146,7 +146,7 @@ class LifeStyleAdapter(var context: Context, var list: List<LifestyleBean>) : Re
     /**
      * 弹出底部对话框
      */
-    fun openPop(bean: WeatherForecastEntity.HeWeather6Bean.LifestyleBean) {
+    fun openPop(bean: LifestyleBean) {
         val popView = LayoutInflater.from(context).inflate(
                 R.layout.lifestyle_item_layout, null)
         val rootView = popView.findViewById<View>(R.id.root_main)

@@ -21,7 +21,6 @@ import com.google.gson.Gson
 import com.jaeger.library.StatusBarUtil
 import com.weather.zhigao.adapter.HotCityAdapter
 import com.weather.zhigao.db.DatabaseManager
-import com.weather.zhigao.model.WeatherForecastEntity.HeWeather6Bean.DailyForecastBean
 import com.weather.zhigao.adapter.SearchCityAdapter
 import com.weather.zhigao.adapter.divider.RecycleViewDivider
 import com.weather.zhigao.model.HotCityEntity
@@ -171,9 +170,9 @@ class FindCityActivity : AppCompatActivity() {
 
                 val intent = Intent(this@FindCityActivity, MainActivity::class.java)
                 intent.putExtra("weather", weatherBroadcast)
-                var HeWeather6_size=weatherBroadcast.HeWeather6!!.size
+                var HeWeather6_size=weatherBroadcast.heWeather6!!.size
                 Log.d(TAG,"weatherBroadcast.HeWeather6!!.size--------------------"+HeWeather6_size)
-                var daily_forecast_size=weatherBroadcast.HeWeather6!!.get(0).daily_forecast.size
+                var daily_forecast_size=weatherBroadcast.heWeather6!!.get(0).daily_forecast.size
                 Log.d(TAG,"weatherBroadcast.HeWeather6!!.get(0).daily_forecast.size--------------------"+daily_forecast_size)
                 startActivity(intent)
                 inserData(weatherBroadcast)

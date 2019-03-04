@@ -10,7 +10,7 @@ import android.widget.TextView
 
 import com.weather.zhigao.R
 import com.weather.zhigao.application.App
-import com.weather.zhigao.model.WeatherForecastEntity.HeWeather6Bean.DailyForecastBean
+import com.weather.zhigao.model.weather.DailyForecastBean
 import com.weather.zhigao.utils.TimeUtil
 import com.weather.zhigao.utils.Weather2IconUtil
 
@@ -36,13 +36,13 @@ class WeatherForecastAdapter(var context: Context, var list: List<DailyForecastB
         } else if (position == 1) {
             holder.tv_week.text = App.mContext.getString(R.string.tomorrow)
         } else
-            holder.tv_week.text = TimeUtil.dateToWeek(bean.date)
-        val splits = bean.date.split("-".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
-        holder.tv_date.setText(splits[1] + "/" + splits[2])
-        holder.tv_weather.text = bean.cond_txt_d
-        holder.tv_temperature.text = bean.tmp_min + "~" + bean.tmp_max + " ℃"
-        holder.tv_wind.text = bean.wind_dir + bean.wind_sc + App.mContext.getString(R.string.degree)
-        holder.iv_weather.setImageResource(Weather2IconUtil.getWeatherIconId(bean.cond_txt_d))
+            holder.tv_week.text = TimeUtil.dateToWeek(bean?.date)
+        val splits = bean?.date?.split("-".toRegex())?.dropLastWhile({ it.isEmpty() })?.toTypedArray()
+        holder.tv_date.setText(splits!![1] + "/" + splits!![2])
+        holder.tv_weather.text = bean?.cond_txt_d
+        holder.tv_temperature.text = bean?.tmp_min + "~" + bean?.tmp_max + " ℃"
+        holder.tv_wind.text = bean?.wind_dir + bean?.wind_sc + App.mContext.getString(R.string.degree)
+        holder.iv_weather.setImageResource(Weather2IconUtil.getWeatherIconId(bean?.cond_txt_d))
     }
 
     override fun getItemCount(): Int {

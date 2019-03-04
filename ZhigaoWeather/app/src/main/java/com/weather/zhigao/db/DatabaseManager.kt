@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 
 import com.weather.zhigao.model.WeatherForecastEntity
-import com.weather.zhigao.model.WeatherForecastEntity.HeWeather6Bean.DailyForecastBean
 import com.weather.zhigao.model.CityAddBean
 import com.weather.zhigao.model.CityTable
 import com.weather.zhigao.utils.LogUtil
@@ -128,9 +127,11 @@ class DatabaseManager private constructor(context: Context) {
     }
 
     fun getCityBean(weatherBroadcast: WeatherForecastEntity): CityAddBean {
-        val location = weatherBroadcast.HeWeather6!![0].basic.location
-        val cond_txt = weatherBroadcast.HeWeather6!![0].now.cond_txt
-        val bean = weatherBroadcast.HeWeather6!![0].daily_forecast[0]
+
+        var heWeather=weatherBroadcast.heWeather6!![0]
+        val location = heWeather.basic.location
+        val cond_txt = heWeather.now.cond_txt
+        val bean = heWeather.daily_forecast[0]
         val tmp_min = bean.tmp_min
         val tmp_max = bean.tmp_max
         return CityAddBean(location, cond_txt, tmp_min, tmp_max)

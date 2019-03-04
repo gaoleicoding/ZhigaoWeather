@@ -14,7 +14,6 @@ import android.util.Log
 import android.widget.RemoteViews
 
 import com.weather.zhigao.model.WeatherForecastEntity
-import com.weather.zhigao.model.WeatherForecastEntity.HeWeather6Bean.DailyForecastBean
 import com.weather.zhigao.utils.Weather2IconUtil
 
 import android.app.PendingIntent.FLAG_CANCEL_CURRENT
@@ -57,12 +56,12 @@ class MyService : Service() {
 
     private fun setRemoteView(weatherBroadcast: WeatherForecastEntity) {
 
-
-        val location = weatherBroadcast.heWeather6[0].getBasic().getLocation()
-        val cond_txt = weatherBroadcast.heWeather6[0].getNow().getCond_txt()
-        val nowTmp = weatherBroadcast.heWeather6[0].getNow().getTmp()
-        val bean = weatherBroadcast.heWeather6[0].getDaily_forecast()[0]
-        val tmp = bean.getTmp_min() + "~" + bean.getTmp_max() + " ℃"
+        var heWeather=weatherBroadcast.heWeather6!![0]
+        val location = heWeather.basic.location
+        val cond_txt = heWeather.now.cond_txt
+        val nowTmp = heWeather.now.tmp
+        val bean = heWeather.daily_forecast[0]
+        val tmp = bean.tmp_min + "~" + bean.tmp_max + " ℃"
         val iconId = Weather2IconUtil.getWeatherIconId(cond_txt)
 
         remoteViews!!.setTextViewText(R.id.tv_location, location)

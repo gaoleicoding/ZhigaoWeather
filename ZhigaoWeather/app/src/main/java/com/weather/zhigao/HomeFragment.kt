@@ -24,9 +24,6 @@ import com.weather.zhigao.adapter.divider.RecycleViewDivider
 import com.weather.zhigao.application.App
 import com.weather.zhigao.db.DatabaseManager
 import com.weather.zhigao.model.WeatherForecastEntity
-import com.weather.zhigao.model.WeatherForecastEntity.HeWeather6Bean.DailyForecastBean
-import com.weather.zhigao.model.WeatherForecastEntity.HeWeather6Bean.HourlyBean
-import com.weather.zhigao.model.WeatherForecastEntity.HeWeather6Bean.LifestyleBean
 import com.weather.zhigao.utils.LogUtil
 import com.weather.zhigao.utils.LunarUtil
 import com.weather.zhigao.utils.ScreenUtils
@@ -36,6 +33,9 @@ import com.weather.zhigao.utils.Weather2IconUtil
 import java.util.ArrayList
 
 import android.content.Context.NOTIFICATION_SERVICE
+import com.weather.zhigao.model.weather.DailyForecastBean
+import com.weather.zhigao.model.weather.HourlyBean
+import com.weather.zhigao.model.weather.LifestyleBean
 
 class HomeFragment : Fragment() {
     lateinit var tv_position: TextView
@@ -135,30 +135,31 @@ class HomeFragment : Fragment() {
         initRecyclerView()
         initHourlyRecyclerView()
         initLifeStyleRecyclerView()
-        Log.d(TAG, "weatherBroadcast.HeWeather6!!.size-------HomeFragment-------------" + weatherBroadcast.heWeather6.size)
-        forecastAdapter.list = weatherBroadcast.heWeather6[0].getDaily_forecast()
-        hourlyForecastAdapter.list = weatherBroadcast.heWeather6[0].getHourly()
+        var heWeather=weatherBroadcast.heWeather6!![0]
+//        Log.d(TAG, "weatherBroadcast.HeWeather6!!.size-------HomeFragment-------------" + weatherBroadcast.heWeather6.size)
+        forecastAdapter.list = heWeather.daily_forecast
+        hourlyForecastAdapter.list = heWeather.hourly
 
-        val lifestyleList = weatherBroadcast.heWeather6[0].getLifestyle()
+        val lifestyleList = heWeather.lifestyle
         if (lifestyleList != null && lifestyleList.size > 0) {
             lifeStyleAdapter.list = lifestyleList
-            tv_air_content.text = lifestyleList[lifestyleList.size - 1].getBrf()
-            tv_lifestyle_weather.text = lifestyleList[1].getBrf()
+            tv_air_content.text = lifestyleList[lifestyleList.size - 1].brf
+            tv_lifestyle_weather.text = lifestyleList[1].brf
         }
-        val location = weatherBroadcast.heWeather6[0].getBasic().getLocation()
+        val location = heWeather.basic.location
         LogUtil.d(TAG, "initData，location：$location")
         tv_position.text = location
-        val date = weatherBroadcast.heWeather6[0].getUpdate().getLoc().split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0]
+        val date = heWeather.update.loc.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0]
         tv_date.text = TimeUtil.getStringToDate(date) + " " + TimeUtil.dateToWeek(date) + " " + LunarUtil.lunarDate
-        val nowTemp = weatherBroadcast.heWeather6[0].getNow().getTmp()
+        val nowTemp = heWeather.now.tmp
         tv_temperature.text = nowTemp
-        val cond_txt = weatherBroadcast.heWeather6[0].getNow().getCond_txt()
+        val cond_txt = heWeather.now.cond_txt
         tv_weather.text = cond_txt
 
-        val bean = weatherBroadcast.heWeather6[0].getDaily_forecast()[0]
-        tv_lifestyle_forecast.text = bean.getTmp_min() + "~" + bean.getTmp_max() + " ℃"
-        tv_lifestyle_wind.text = bean.getWind_dir() + bean.getWind_sc() + App.mContext.getString(R.string.degree)
-        tv_update_time.text = getString(R.string.update_time) + weatherBroadcast.heWeather6[0].getUpdate().getLoc()
+        val bean = heWeather.daily_forecast[0]
+        tv_lifestyle_forecast.text = bean.tmp_min + "~" + bean.tmp_max + " ℃"
+        tv_lifestyle_wind.text = bean.wind_dir + bean.wind_sc + App.mContext.getString(R.string.degree)
+        tv_update_time.text = getString(R.string.update_time) + heWeather.update.loc
 
         val sunriseTime = TimeUtil.dateToLong(TimeUtil.ConverToDate(TimeUtil.currentDate + " 06:00")!!)
         val sunsetTime = TimeUtil.dateToLong(TimeUtil.ConverToDate(TimeUtil.currentDate + " 19:00")!!)

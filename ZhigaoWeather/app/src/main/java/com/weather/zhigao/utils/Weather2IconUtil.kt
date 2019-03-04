@@ -35,7 +35,7 @@ object Weather2IconUtil {
 
     }
 
-    fun getWeatherIconId(desc: String): Int {
+    fun getWeatherIconId(desc: String?): Int {
         if (!TextUtils.isEmpty(desc)) {
             if (desc.equals(App.mContext.getString(R.string.sunny), ignoreCase = true)) {
                 return R.drawable.iclockweather_w1

@@ -63,7 +63,7 @@ object TimeUtil {
         return date
     }
 
-    fun dateToWeek(strDate: String): String? {
+    fun dateToWeek(strDate: String?): String? {
         var dayIndex = 0
         try {
             val df = SimpleDateFormat("yyyy-MM-dd")
