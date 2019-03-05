@@ -1,5 +1,10 @@
 # ZhigaoWeather
-智高天气
+智高天气，Java+Kotlin双版本：
+
+https://github.com/gaoleicoding/ZhigaoWeather/tree/kotlin
+
+https://github.com/gaoleicoding/ZhigaoWeather/tree/master
+
 
 app扫码下载体验
 
