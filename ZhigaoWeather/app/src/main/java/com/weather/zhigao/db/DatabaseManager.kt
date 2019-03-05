@@ -128,7 +128,7 @@ class DatabaseManager private constructor(context: Context) {
 
     fun getCityBean(weatherBroadcast: WeatherForecastEntity): CityAddBean {
 
-        var heWeather=weatherBroadcast.heWeather6!![0]
+        var heWeather=weatherBroadcast.HeWeather6!![0]
         val location = heWeather.basic.location
         val cond_txt = heWeather.now.cond_txt
         val bean = heWeather.daily_forecast[0]

@@ -135,7 +135,7 @@ class HomeFragment : Fragment() {
         initRecyclerView()
         initHourlyRecyclerView()
         initLifeStyleRecyclerView()
-        var heWeather=weatherBroadcast.heWeather6!![0]
+        var heWeather=weatherBroadcast.HeWeather6!![0]
 //        Log.d(TAG, "weatherBroadcast.HeWeather6!!.size-------HomeFragment-------------" + weatherBroadcast.heWeather6.size)
         forecastAdapter.list = heWeather.daily_forecast
         hourlyForecastAdapter.list = heWeather.hourly

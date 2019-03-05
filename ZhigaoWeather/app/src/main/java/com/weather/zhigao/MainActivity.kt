@@ -89,9 +89,9 @@ class MainActivity : AppCompatActivity() {
 
         initRecyclerView()
         val weatherBroadcast = intent.getParcelableExtra<WeatherForecastEntity>("weather")
-        var HeWeather6_size=weatherBroadcast.heWeather6!!.size
+        var HeWeather6_size=weatherBroadcast.HeWeather6!!.size
         Log.d(TAG,"weatherBroadcast.HeWeather6!!.size--------------------"+HeWeather6_size)
-        var daily_forecast_size=weatherBroadcast.heWeather6!!.get(0).daily_forecast.size
+        var daily_forecast_size=weatherBroadcast.HeWeather6!!.get(0).daily_forecast.size
         Log.d(TAG,"weatherBroadcast.HeWeather6!!.get(0).daily_forecast.size--------------------"+daily_forecast_size)
         homeFragment.setData(weatherBroadcast)
 
@@ -111,8 +111,10 @@ class MainActivity : AppCompatActivity() {
 
     fun setRecyclerView() {
         cityList = dataBaseDao!!.queryAll()
-        if (cityList != null)
-            cityAddAdapter.list = cityList
+        if (cityList != null) {
+            cityAddAdapter.changeList(cityList)
+        }
+
         LogUtil.d(TAG, "cityList.size()：" + cityList!!.size)
     }
 

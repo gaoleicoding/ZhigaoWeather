@@ -167,15 +167,15 @@ class FindCityActivity : AppCompatActivity() {
 
             override fun onResponse(response: String) {
                 val weatherBroadcast = Gson().fromJson(response, WeatherForecastEntity::class.java)
-
+                inserData(weatherBroadcast)
                 val intent = Intent(this@FindCityActivity, MainActivity::class.java)
                 intent.putExtra("weather", weatherBroadcast)
-                var HeWeather6_size=weatherBroadcast.heWeather6!!.size
+                var HeWeather6_size=weatherBroadcast.HeWeather6!!.size
                 Log.d(TAG,"weatherBroadcast.HeWeather6!!.size--------------------"+HeWeather6_size)
-                var daily_forecast_size=weatherBroadcast.heWeather6!!.get(0).daily_forecast.size
+                var daily_forecast_size=weatherBroadcast.HeWeather6!!.get(0).daily_forecast.size
                 Log.d(TAG,"weatherBroadcast.HeWeather6!!.get(0).daily_forecast.size--------------------"+daily_forecast_size)
                 startActivity(intent)
-                inserData(weatherBroadcast)
+
                 finish()
 
             }
